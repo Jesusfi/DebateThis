@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">DebateThis</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="login">Login</string>
+    <string name="new_click_here_to_sign_up">New? Click here to sign up</string>
+    <string name="logging_in">Logging you in..</string>
+    <string name="auth_success">Auth Success</string>
+    <string name="auth_failed">Auth Failed</string>
+    <string name="first_name_prompt">First name</string>
+    <string name="last_name_prompt">Last Name</string>
+    <string name="sign_up">Sign up</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="news">News</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="title_activity_web_view">WebView</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="welcome_back">Welcome back!</string>
+
+    <string-array name="categories">
+        <item>Politics</item>
+        <item>Gaming</item>
+        <item>Social Issues</item>
+    </string-array>
+</resources>

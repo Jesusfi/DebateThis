@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "220745345949",
+    "firebase_url": "https://debatethis-50a1c.firebaseio.com",
+    "project_id": "debatethis-50a1c",
+    "storage_bucket": "debatethis-50a1c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:220745345949:android:1df93868ac2b4f04",
+        "android_client_info": {
+          "package_name": "com.example.jesusizquierdo.debatethis"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "220745345949-ddmqgqfg5dqb86r4o2fp8t87f16bmo2s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jesusizquierdo.debatethis",
+            "certificate_hash": "a03c0ef7c6084e66f073d69d38599aed615f4fbe"
+          }
+        },
+        {
+          "client_id": "220745345949-2msd7fd0c6tcq1tabo3k70skqn4nm9l0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoH01V8_bscY8wXP8DklcERJ_xudoEtRg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "220745345949-2msd7fd0c6tcq1tabo3k70skqn4nm9l0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
