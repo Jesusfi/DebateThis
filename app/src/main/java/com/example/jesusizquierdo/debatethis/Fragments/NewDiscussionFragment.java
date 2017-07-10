@@ -42,6 +42,7 @@ public class NewDiscussionFragment extends Fragment {
     Spinner pickCategory;
     String time;
     ArrayList<String> arrayList;
+
     public NewDiscussionFragment() {
         // Required empty public constructor
     }
@@ -54,8 +55,8 @@ public class NewDiscussionFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_new_discussion, container, false);
         arrayList = new ArrayList<>();
         setTime();
-        ((MainActivity)getContext()).getSupportActionBar().show();
-
+        ((MainActivity) getContext()).getSupportActionBar().show();
+        ((MainActivity) getContext()).getSupportActionBar().setTitle("New Discussion");
 
 
         userOpinion = (EditText) rootView.findViewById(R.id.et_opinion_newDiscussion);
@@ -64,9 +65,10 @@ public class NewDiscussionFragment extends Fragment {
         final TextView articleTitle = (TextView) rootView.findViewById(R.id.tv_article_title_newDiscussion);
         FloatingActionButton floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.fab_add_post);
 
-         articles = (Articles) getArguments().get("Articles");
+        articles = (Articles) getArguments().get("Articles");
 
         articleTitle.setText(articles.getTitle());
+        Toast.makeText(getContext(),articles.getTitle(),Toast.LENGTH_SHORT).show();
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,9 +83,9 @@ public class NewDiscussionFragment extends Fragment {
                     Toast.makeText(getActivity(), "Must add Title", Toast.LENGTH_SHORT).show();
                 } else {
                     String date = "";
-                    if(arrayList.size() > 0){
-                       date =  Date(arrayList.get(arrayList.size()-1));
-                    }else{
+                    if (arrayList.size() > 0) {
+                        date = Date(arrayList.get(arrayList.size() - 1));
+                    } else {
                         date = Date(arrayList.get(0));
 
                     }
@@ -93,7 +95,7 @@ public class NewDiscussionFragment extends Fragment {
 
                     String uniqueID = databaseReference.getKey();
 
-                    String userName = ((MainActivity)getActivity()).getUserName();
+                    String userName = ((MainActivity) getActivity()).getUserName();
 
                     DiscussionCard newDebatCard = new DiscussionCard(
                             title,
@@ -107,7 +109,7 @@ public class NewDiscussionFragment extends Fragment {
 
                     databaseReference.setValue(newDebatCard);
 
-                    DiscussionCardInfo cardInfo = new DiscussionCardInfo(articles.getUrl(), articles.getTitle(),uniqueID);
+                    DiscussionCardInfo cardInfo = new DiscussionCardInfo(articles.getUrl(), articles.getTitle(), uniqueID, date);
                     reference.child(uniqueID).setValue(cardInfo);
 
                     getFragmentManager().popBackStack();
@@ -122,7 +124,7 @@ public class NewDiscussionFragment extends Fragment {
         return rootView;
     }
 
-    public void checkIfCreated(){
+    public void checkIfCreated() {
 
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Discussion Info");
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -137,9 +139,9 @@ public class NewDiscussionFragment extends Fragment {
                         break;
                     }
                 }
-                if(isCreated){
-                    Toast.makeText(getContext(),"Darn looks like someone beat you to it",Toast.LENGTH_SHORT).show();
-                }else{
+                if (isCreated) {
+                    Toast.makeText(getContext(), "Darn looks like someone beat you to it", Toast.LENGTH_SHORT).show();
+                } else {
 
                     final String title = postTitle.getText().toString();
                     final String category = pickCategory.getSelectedItem().toString();
@@ -149,7 +151,7 @@ public class NewDiscussionFragment extends Fragment {
 
                     String uniqueID = databaseReference.getKey();
 
-                    String userName = ((MainActivity)getActivity()).getUserName();
+                    String userName = ((MainActivity) getActivity()).getUserName();
 
                     DiscussionCard newDebatCard = new DiscussionCard(title, category, articles.getAuthor(),
                             userOpinion.getText().toString(),
@@ -160,7 +162,7 @@ public class NewDiscussionFragment extends Fragment {
 
                     databaseReference.setValue(newDebatCard);
 
-                    DiscussionCardInfo cardInfo = new DiscussionCardInfo(articles.getUrl(), articles.getTitle(),uniqueID);
+                    DiscussionCardInfo cardInfo = new DiscussionCardInfo(articles.getUrl(), articles.getTitle(), uniqueID, "this shouldn't matter");
                     reference.child(uniqueID).setValue(cardInfo);
 
                     getFragmentManager().popBackStack();
@@ -179,19 +181,20 @@ public class NewDiscussionFragment extends Fragment {
 
 
     }
-    public void setTime(){
+
+    public void setTime() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Time");
         Object time = ServerValue.TIMESTAMP;
         reference.setValue(time);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-               Object time2 = dataSnapshot.getValue(Object.class);
+                Object time2 = dataSnapshot.getValue(Object.class);
 
                 arrayList.add(time2.toString());
 
 //                String text = formatter.format(new Date(Integer.getInteger(time2.toString())));
-  //              Toast.makeText(getContext(),text,Toast.LENGTH_SHORT).show();
+                //              Toast.makeText(getContext(),text,Toast.LENGTH_SHORT).show();
 
             }
 
@@ -201,14 +204,16 @@ public class NewDiscussionFragment extends Fragment {
             }
         });
     }
-    public String Date(String time){
+
+    public String Date(String time) {
 
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         formatter.setTimeZone(TimeZone.getDefault());
         String text = formatter.format(new Date(Long.parseLong(time)));
 
-        return  text;
+        return text;
     }
+
     @Override
     public void onPause() {
         super.onPause();

@@ -34,10 +34,17 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="welcome_back">Welcome back!</string>
+    <string name="profile">Profile</string>
 
     <string-array name="categories">
         <item>Politics</item>
         <item>Gaming</item>
         <item>Social Issues</item>
+        <item>Immigration</item>
+        <item>Religion</item>
+        <item>Education</item>
+        <item>Technology</item>
+        <item>Philosophy</item>
+
     </string-array>
 </resources>

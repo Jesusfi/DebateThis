@@ -26,7 +26,7 @@ class WebViewFragment : Fragment() {
         val webView = rootView.findViewById(R.id.web_view) as WebView
         val progressDialog = ProgressDialog(activity)
         progressDialog.setMessage("Loading article...")
-        progressDialog.setCancelable(false)
+        progressDialog.setCancelable(true)
         progressDialog.show()
 
 
@@ -38,6 +38,8 @@ class WebViewFragment : Fragment() {
                 super.onProgressChanged(view, newProgress)
                 if(newProgress > 90){
                     progressDialog.dismiss()
+                }else{
+                    progressDialog.setMessage("Loading article " + newProgress + "%")
                 }
             }
         })

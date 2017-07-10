@@ -132,7 +132,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    public void Signup(String email, String password, final String firstName) {
+    public void Signup(String email, String password, final String firstName, final String lastName) {
         progressDialog.setMessage("Creating User");
         progressDialog.show();
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -146,7 +146,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             progressDialog.dismiss();
                             Toast.makeText(LoginActivity.this,R.string.auth_success,Toast.LENGTH_SHORT).show();
-                            saveInformation(firstName);
+                            saveInformation(firstName,lastName);
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             finish();
                         }else{
@@ -181,13 +181,13 @@ public class LoginActivity extends AppCompatActivity {
         signUpDialogFragment.show(getSupportFragmentManager(), "Sign up Fragment");
     }
 
-    public void saveInformation(String userName) {
+    public void saveInformation(String userFirstName,String userLastName) {
 
         FirebaseUser user = mAuth.getCurrentUser();
 
         if (user != null) {
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-            User newUser = new User(userName,mAuth.getCurrentUser().getEmail());
+            User newUser = new User(userFirstName,userLastName,mAuth.getCurrentUser().getEmail());
             databaseReference.child("Users").child(user.getUid()).setValue(newUser);
             Toast.makeText(LoginActivity.this, "Information saved", Toast.LENGTH_SHORT).show();
 

@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.jesusizquierdo.debatethis.Fragments.DebateFragment;
 import com.example.jesusizquierdo.debatethis.Fragments.DiscussionFragment;
 import com.example.jesusizquierdo.debatethis.Fragments.HomePageFragment;
 import com.example.jesusizquierdo.debatethis.Fragments.NewsFragment;
@@ -26,7 +27,7 @@ public class SimpleFragmentPageAdapter extends FragmentPagerAdapter {
             case 0:
                 return new DiscussionFragment();
             case 1:
-                return new DiscussionFragment();
+                return new DebateFragment();
             default:
                 return null;
         }

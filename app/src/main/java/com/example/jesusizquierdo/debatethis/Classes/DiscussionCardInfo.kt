@@ -5,5 +5,6 @@ package com.example.jesusizquierdo.debatethis.Classes
  */
 class DiscussionCardInfo(val url: String = "",
                          val article: String = "",
-                         val key: String = "") {
+                         val key: String = "",
+                         val date:String = "") {
 }

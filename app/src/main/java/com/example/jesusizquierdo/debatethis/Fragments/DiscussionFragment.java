@@ -18,6 +18,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -64,16 +65,24 @@ public class DiscussionFragment extends Fragment {
         ((MainActivity) getContext()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         FloatingActionButton floatingActionButton = (FloatingActionButton) viewRoot.findViewById(R.id.fab_calender_discussion);
+        Button nextButton = (Button) viewRoot.findViewById(R.id.btn_next_discussionFragment);
+        Button backButton = (Button) viewRoot.findViewById(R.id.btn_back_discussionFragment);
+        final TextView displayDate = (TextView) viewRoot.findViewById(R.id.tv_date_discussionFragment);
         mRecyclerView = (RecyclerView) viewRoot.findViewById(R.id.id_for_test);
         editText = (EditText) viewRoot.findViewById(R.id.search_string);
+
+
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Loading debates and discussions");
         progressDialog.show();
         list = new ArrayList<>();
 
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        final Calendar calendar = Calendar.getInstance();
+        final DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         df.setTimeZone(TimeZone.getDefault());
-        String date = df.format(Calendar.getInstance().getTime());
+        String date = df.format(calendar.getTime());
+
+        displayDate.setText(date);
 
         setUpFirebaseAdapter(date);
 
@@ -92,13 +101,14 @@ public class DiscussionFragment extends Fragment {
                         String year = Integer.toString(selectedYear);
                         if (selectedDay < 10) {
                             day = "0" + day;
-                        } else if (selectedMonth < 10) {
+                        }
+                        if (selectedMonth < 10) {
                             month = "0" + month;
                         }
 
                         setUpFirebaseAdapter(year + "-" + month + "-" + day);
-
-                        Toast.makeText(getContext(),year + "-" + month + "-" + day , Toast.LENGTH_SHORT).show();
+                        displayDate.setText(year + "-" + month + "-" + day);
+                        Toast.makeText(getContext(), year + "-" + month + "-" + day, Toast.LENGTH_SHORT).show();
                     }
                 };
 // Create the DatePickerDialog instance
@@ -107,10 +117,32 @@ public class DiscussionFragment extends Fragment {
                         cal.get(Calendar.YEAR),
                         cal.get(Calendar.MONTH),
                         cal.get(Calendar.DAY_OF_MONTH));
+
+
                 datePicker.setCancelable(true);
                 datePicker.show();
 
 // Listener
+
+            }
+        });
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                calendar.add(Calendar.DATE, 1);
+                String date = df.format(calendar.getTime());
+                displayDate.setText(date);
+                setUpFirebaseAdapter(date);
+            }
+        });
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                calendar.add(Calendar.DATE, -1);
+                String date = df.format(calendar.getTime());
+                displayDate.setText(date);
+                setUpFirebaseAdapter(date);
 
             }
         });

@@ -1,0 +1,154 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.jesusizquierdo.debatethis.Fragments.ProfileFragment">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:text="Profile" />
+    <ScrollView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="vertical">
+
+           <android.support.v7.widget.CardView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_margin="4dp">
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="vertical">
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:orientation="horizontal">
+
+                       <TextView
+                           android:layout_width="0dp"
+                           android:layout_height="wrap_content"
+                           android:layout_weight="1"
+                           android:gravity="center"
+                           android:text="Name"
+                           android:textColor="@color/primary_text"
+                           android:textStyle="bold" />
+
+                       <TextView
+                           android:layout_width="0dp"
+                           android:layout_height="wrap_content"
+                           android:layout_weight="1"
+                           android:gravity="center"
+                           android:text="Profile Pic"
+                           android:textColor="@color/primary_text"
+                           android:textStyle="bold" />
+
+                       <TextView
+                           android:layout_width="0dp"
+                           android:layout_height="wrap_content"
+                           android:layout_weight="1"
+                           android:gravity="center"
+                           android:text="Bio"
+                           android:textColor="@color/primary_text"
+                           android:textStyle="bold" />
+
+                   </LinearLayout>
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:orientation="horizontal">
+
+                       <TextView
+                           android:layout_width="0dp"
+                           android:layout_height="match_parent"
+                           android:layout_weight="1"
+                           android:id="@+id/tv_name_profileFragment"
+                           android:gravity="center"
+                           android:text="Jesus Izquierdo"
+                           android:textColor="@color/primary_text" />
+
+                       <ImageView
+                           android:id="@+id/imageView3"
+                           android:layout_width="0dp"
+                           android:layout_height="100dp"
+                           android:layout_weight="1"
+                           app:srcCompat="@drawable/profile_placeholder" />
+
+                       <TextView
+                           android:layout_width="0dp"
+                           android:layout_height="match_parent"
+                           android:layout_weight="1"
+                           android:gravity="center"
+                           android:id="@+id/tv_bio_profileFragment"
+                           android:text="To take up space to see how it would look when they fill up their bio and yeah"
+                           android:textColor="@color/primary_text" />
+
+                   </LinearLayout>
+
+               </LinearLayout>
+
+
+           </android.support.v7.widget.CardView>
+
+           <android.support.v7.widget.CardView
+               android:layout_width="match_parent"
+               android:layout_margin="4dp"
+               android:layout_height="wrap_content">
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+
+                   <Button
+                       style="@style/Widget.AppCompat.Button.Borderless"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:text="Posts"
+                       android:textAllCaps="false"/>
+
+                   <Button
+                       style="@style/Widget.AppCompat.Button.Borderless"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:text="Topics"
+                       android:textAllCaps="false"/>
+
+                   <Button
+                       style="@style/Widget.AppCompat.Button.Borderless"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:textAllCaps="false"
+                       android:text="Comments" />
+               </LinearLayout>
+
+           </android.support.v7.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
+           <Button
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="Sign out"
+               android:id="@+id/btn_signout_profileFragment"/>
+       </LinearLayout>
+   </ScrollView>
+
+
+</LinearLayout>

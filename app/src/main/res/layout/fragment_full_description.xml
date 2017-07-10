@@ -6,14 +6,15 @@
     android:orientation="vertical"
     tools:context="com.example.jesusizquierdo.debatethis.Fragments.FullDescriptionFragment">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
             android:id="@+id/card_head_fullDescription"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <LinearLayout
@@ -22,59 +23,28 @@
                 android:layout_margin="8dp"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingLeft="4dp"
-                        android:text="Started by Jesus Izquierdo"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tv_category_fullDescription"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="4dp"
-                        android:text="Politics"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:background="@android:color/darker_gray" />
-
                 <TextView
                     android:id="@+id/tv_card_title_fullDescription"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_marginBottom="2dp"
+                    android:layout_marginBottom="4dp"
                     android:layout_weight="1"
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:text="It time that Trump steps down"
                     android:textColor="@android:color/black"
-                    android:textSize="17sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_description_fullDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="2dp"
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"
                     android:text="Description"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tv_article_title_fullDescription"
@@ -85,8 +55,31 @@
                     android:maxLines="1"
                     android:paddingRight="4dp"
                     android:text="Trump deportes Marco Rubio"
-                    android:textSize="12sp"
-                    android:textStyle="italic" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_name_of_card_creator_fullDescription"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingLeft="4dp"
+                        android:text="Started by Jesus Izquierdo"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_category_fullDescription"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="4dp"
+                        android:text="Politics"
+                        android:textSize="12sp" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_source_discussionCard"
@@ -153,6 +146,7 @@
             android:hint="What are your thoughts on this?"
             android:visibility="gone" />
     </LinearLayout>
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_new_comment_fullDescription"

@@ -1,0 +1,43 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.jesusizquierdo.debatethis.Fragments.NewDebateFragment">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/primary_text"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_margin="4dp"
+        android:text="What do you want to Debate about?" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:hint="Set a title"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="top|left"
+        android:inputType="textMultiLine"
+        android:layout_weight="8"
+        android:hint="Give us your viewpoint and why"/>
+
+</LinearLayout>
+    <!-- TODO: Update blank fragment layout -->
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_new_comment_fullDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:src="@drawable/ic_check_black_48dp"
+        android:tint="@android:color/white" />
+</android.support.design.widget.CoordinatorLayout>

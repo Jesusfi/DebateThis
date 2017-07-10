@@ -28,7 +28,9 @@ public class FirebaseCommentViewHolder extends RecyclerView.ViewHolder implement
 
     public void bindComments(Comment comment){
         TextView comment_tv = (TextView) itemView.findViewById(R.id.comment);
+        TextView nameComment = (TextView) itemView.findViewById(R.id.tv_name_comment);
         comment_tv.setText(comment.getComment());
+        nameComment.setText(comment.getUserName());
     }
 
     @Override

@@ -16,8 +16,10 @@ import com.example.jesusizquierdo.debatethis.Classes.DiscussionCard;
 import com.example.jesusizquierdo.debatethis.Classes.User;
 import com.example.jesusizquierdo.debatethis.Fragments.FullDescriptionFragment;
 import com.example.jesusizquierdo.debatethis.Fragments.HomePageFragment;
+import com.example.jesusizquierdo.debatethis.Fragments.NewDebateFragment;
 import com.example.jesusizquierdo.debatethis.Fragments.NewDiscussionFragment;
 import com.example.jesusizquierdo.debatethis.Fragments.NewsFragment;
+import com.example.jesusizquierdo.debatethis.Fragments.ProfileFragment;
 import com.example.jesusizquierdo.debatethis.Fragments.WebViewFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -46,8 +48,7 @@ public class MainActivity extends AppCompatActivity {
             firebaseAuth.signOut();
             startActivity(new Intent(this, LoginActivity.class));
             finish();
-        }else if(i == android.R.id.home){
-            Toast.makeText(MainActivity.this,"Clicked",Toast.LENGTH_SHORT).show();
+        } else if (i == android.R.id.home) {
             FragmentManager fragmentManager1 = getSupportFragmentManager();
             fragmentManager1.popBackStack();
         }
@@ -62,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = firebaseAuth.getCurrentUser();
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-
 
 
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
         final FragmentManager fragmentManager = getSupportFragmentManager();
         final HomePageFragment mainPageFragment = new HomePageFragment();
+        final ProfileFragment profileFragment = new ProfileFragment();
         fragmentManager.beginTransaction()
                 .add(R.id.content, mainPageFragment)
                 .commit();
@@ -99,7 +100,9 @@ public class MainActivity extends AppCompatActivity {
                                 .commit();
                         return true;
                     case R.id.navigation_notifications:
-                        Toast.makeText(MainActivity.this, "Pushed", Toast.LENGTH_LONG).show();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.content, profileFragment)
+                                .commit();
                         return true;
 
                 }
@@ -122,39 +125,63 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
 
     }
-    public  void startNewDiscussionFragment(Articles articles){
+
+    public void startNewDiscussionFragment(Articles articles) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         NewDiscussionFragment newDiscussionFragment = new NewDiscussionFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable("Articles",articles);
+        bundle.putParcelable("Articles", articles);
         newDiscussionFragment.setArguments(bundle);
         fragmentManager.beginTransaction()
-                .replace(R.id.content,newDiscussionFragment)
+                .replace(R.id.content, newDiscussionFragment)
                 .addToBackStack(null)
                 .commit();
 
     }
-    public void startFullDiscussionFragment(DiscussionCard  discussionCard){
+
+    public void startFullDiscussionFragment(DiscussionCard discussionCard) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("DiscussionCard",discussionCard);
-        FullDescriptionFragment fullDescriptionFragment  = new FullDescriptionFragment();
+        bundle.putSerializable("DiscussionCard", discussionCard);
+        FullDescriptionFragment fullDescriptionFragment = new FullDescriptionFragment();
         fullDescriptionFragment.setArguments(bundle);
         fragmentManager.beginTransaction()
                 .replace(R.id.content, fullDescriptionFragment)
                 .addToBackStack(null)
                 .commit();
     }
-    public void startCategoriesFragment(){
+
+    public void startNewDebateFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FullDescriptionFragment fullDescriptionFragment = new FullDescriptionFragment();
+        fragmentManager.beginTransaction()
+                .replace(R.id.content, new NewDebateFragment())
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void startCategoriesFragment() {
 
     }
-    public String getUserName(){
-        return person.getName();
+
+    public String getUserName() {
+        return person.getFirstName() + " " + person.getLastName();
+    }
+
+    public void signOut(){
+        firebaseAuth.signOut();
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 
     @Override
     public void onBackPressed() {
+
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.popBackStack();
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack();
+        } else {
+            super.onBackPressed();
+        }
     }
 }

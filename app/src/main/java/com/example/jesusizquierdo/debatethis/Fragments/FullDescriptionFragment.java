@@ -44,6 +44,7 @@ public class FullDescriptionFragment extends Fragment {
     RecyclerView mRecyclerView;
     FloatingActionButton fab,fabCancel;
     EditText newComment;
+    CardView cardView;
     ArrayList<Comment> list;
 
     public FullDescriptionFragment() {
@@ -58,18 +59,20 @@ public class FullDescriptionFragment extends Fragment {
         View viewRoot = inflater.inflate(R.layout.fragment_full_description, container, false);
 
         ((MainActivity)getContext()).getSupportActionBar().show();
+        ((MainActivity)getContext()).getSupportActionBar().setTitle("Discussion");
 
 
         mRecyclerView = (RecyclerView) viewRoot.findViewById(R.id.comments_rv);
         fab = (FloatingActionButton) viewRoot.findViewById(R.id.fab_new_comment_fullDescription);
         fabCancel = (FloatingActionButton) viewRoot.findViewById(R.id.fab_exit_comment_fullDescription);
         newComment = (EditText) viewRoot.findViewById(R.id.et_new_comment_fullDescription);
+        cardView = (CardView) viewRoot.findViewById(R.id.card_head_fullDescription);
 
-        CardView cardView = (CardView) viewRoot.findViewById(R.id.card_head_fullDescription);
         TextView category = (TextView) viewRoot.findViewById(R.id.tv_category_fullDescription);
         TextView articleTitle = (TextView) viewRoot.findViewById(R.id.tv_article_title_fullDescription);
         TextView userDescription = (TextView) viewRoot.findViewById(R.id.tv_description_fullDescription);
         TextView cardTitle = (TextView) viewRoot.findViewById(R.id.tv_card_title_fullDescription);
+        TextView username = (TextView) viewRoot.findViewById(R.id.tv_name_of_card_creator_fullDescription);
 
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Loading comments.....");
@@ -80,6 +83,7 @@ public class FullDescriptionFragment extends Fragment {
         category.setText(discussionCard.getCategory());
         articleTitle.setText(discussionCard.getArticleTitle());
         cardTitle.setText(discussionCard.getTitle());
+        username.setText("Discussion started by "+ discussionCard.getUserName());
 
         if (!TextUtils.isEmpty(discussionCard.getUserDescription())) {
             userDescription.setText(discussionCard.getUserDescription());
@@ -101,7 +105,7 @@ public class FullDescriptionFragment extends Fragment {
                     fab.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_check_black_48dp));
 
                 }else{
-                    if(TextUtils.isEmpty(newComment.getText().toString())){
+                    if(TextUtils.isEmpty(newComment.getText().toString().trim())){
                         Toast.makeText(getContext(),"You must write something",Toast.LENGTH_SHORT).show();
 
                     }else{
@@ -113,7 +117,7 @@ public class FullDescriptionFragment extends Fragment {
                         String userName = ((MainActivity)getActivity()).getUserName();
 
                         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Comments").child(discussionCard.getUniqueKey()).push();
-                        Comment comment = new Comment(newComment.getText().toString(),userName);
+                        Comment comment = new Comment(newComment.getText().toString().trim(),userName);
                         reference.setValue(comment);
                     }
 
@@ -137,7 +141,7 @@ public class FullDescriptionFragment extends Fragment {
                 reference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        String url = dataSnapshot.child("Discussion").child(discussionCard.getUniqueKey()).child("url").getValue(String.class);
+                        String url = dataSnapshot.child("Discussion Info").child(discussionCard.getUniqueKey()).child("url").getValue(String.class);
                         Toast.makeText(getContext(),url,Toast.LENGTH_SHORT).show();
                         ((MainActivity)getContext()).startWebViewFragment(url);
 

@@ -11,12 +11,44 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="5dp"
+        android:visibility="gone"
         android:layout_marginTop="50dp"
         android:hint="Search Keyword"
         android:gravity="left"
         android:maxLines="1">
     </EditText>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_height="match_parent"
+            android:text="Back"
+            android:id="@+id/btn_back_discussionFragment"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1.5"
+            android:layout_height="match_parent"
+            android:text="2017-06-12"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="@color/primary_text"
+            android:id="@+id/tv_date_discussionFragment"
+            android:textStyle="bold"
+            />
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:id="@+id/btn_next_discussionFragment"
+            android:layout_height="match_parent"
+            android:text="Next"
+            style="@style/Widget.AppCompat.Button.Borderless"
 
+            />
+    </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/id_for_test"
         android:layout_width="match_parent"

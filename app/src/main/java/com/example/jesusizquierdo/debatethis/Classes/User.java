@@ -7,7 +7,8 @@ import java.util.ArrayList;
  */
 
 public class User {
-    String name;
+    String firstName;
+    String lastName;
     String email;
     ArrayList<String> topicsAgree = new ArrayList<>();
     String userBio;
@@ -15,13 +16,23 @@ public class User {
 
     public User(){}
 
-    public User(String name, String email) {
-        this.name = name;
+    public User(String name,String lastName, String email) {
+        this.firstName = name;
+        this.lastName = lastName;
         this.email = email;
     }
 
-    public String getName() {
-        return name;
+    public void setUserBio(String userBio) {
+        this.userBio = userBio;
+    }
+
+    public String getLastName() {
+
+        return lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
     }
 
     public String getEmail() {

@@ -78,7 +78,7 @@ public class SignUpDialogFragment extends DialogFragment {
 
         if (!cancel) {
             dismiss();
-            ((LoginActivity) getContext()).Signup(email, password, firstName);
+            ((LoginActivity) getContext()).Signup(email, password, firstName,lastName);
         }
 
     }
