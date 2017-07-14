@@ -16,10 +16,13 @@ public class User {
 
     public User(){}
 
-    public User(String name,String lastName, String email) {
+    public User(String name,String lastName, String email, String credentails) {
         this.firstName = name;
         this.lastName = lastName;
         this.email = email;
+        this.credentails = credentails;
+        this.userBio = "No Bio entered yet";
+
     }
 
     public void setUserBio(String userBio) {

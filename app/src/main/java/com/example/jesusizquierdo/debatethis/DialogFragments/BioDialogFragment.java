@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.jesusizquierdo.debatethis.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by Jesus Izquierdo on 7/9/2017.
@@ -31,10 +33,18 @@ public class BioDialogFragment extends DialogFragment {
         bio = (EditText) v.findViewById(R.id.et_bio_dialog);
         done = (Button) v.findViewById(R.id.btn_done_dialog);
 
+        Bundle mArgs = getArguments();
+        final String userID = mArgs.getString("UserID");
+        final String currentBio = mArgs.getString("currentBio");
+        bio.setText(currentBio);
+
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendResult(2,bio.getText().toString());
+                sendResult(2, bio.getText().toString());
+                DatabaseReference mDatabase;
+                mDatabase = FirebaseDatabase.getInstance().getReference();
+                mDatabase.child("Users").child(userID).child("userBio").setValue(bio.getText().toString());
                 dismiss();
             }
         });
@@ -44,9 +54,9 @@ public class BioDialogFragment extends DialogFragment {
 
     }
 
-    private void sendResult(int REQUEST_CODE,String editTextString) {
+    private void sendResult(int REQUEST_CODE, String editTextString) {
         Intent intent = new Intent();
-        intent.putExtra("KEY",editTextString);
+        intent.putExtra("KEY", editTextString);
         //intent.putStringExtra(EDIT_TEXT_BUNDLE_KEY, editTextString);
         getTargetFragment().onActivityResult(
                 getTargetRequestCode(), REQUEST_CODE, intent);

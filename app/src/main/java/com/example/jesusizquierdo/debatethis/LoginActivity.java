@@ -187,7 +187,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (user != null) {
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-            User newUser = new User(userFirstName,userLastName,mAuth.getCurrentUser().getEmail());
+            User newUser = new User(userFirstName,userLastName,mAuth.getCurrentUser().getEmail(),user.getUid());
             databaseReference.child("Users").child(user.getUid()).setValue(newUser);
             Toast.makeText(LoginActivity.this, "Information saved", Toast.LENGTH_SHORT).show();
 

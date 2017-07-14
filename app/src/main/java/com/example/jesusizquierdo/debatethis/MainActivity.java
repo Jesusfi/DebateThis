@@ -167,6 +167,9 @@ public class MainActivity extends AppCompatActivity {
     public String getUserName() {
         return person.getFirstName() + " " + person.getLastName();
     }
+    public String getUserID(){
+        return person.getCredentails();
+    }
 
     public void signOut(){
         firebaseAuth.signOut();
