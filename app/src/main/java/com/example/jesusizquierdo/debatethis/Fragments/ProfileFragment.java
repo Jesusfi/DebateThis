@@ -93,6 +93,7 @@ public class ProfileFragment extends Fragment {
 
                 BioDialogFragment dialogFragment = new BioDialogFragment();
                 dialogFragment.setArguments(args);
+                int nim = 0;
                 dialogFragment.setTargetFragment(profileFragment, REQUEST_CODE);
                 dialogFragment.show(fm, "Bio");
             }
