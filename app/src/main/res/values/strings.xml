@@ -47,4 +47,6 @@
         <item>Philosophy</item>
 
     </string-array>
+    <string name="title_activity_tst">NewDiscussion</string>
+    <string name="title_activity_full_discussion">FullDiscussion</string>
 </resources>

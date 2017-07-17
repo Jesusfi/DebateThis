@@ -1,32 +1,27 @@
-package com.example.jesusizquierdo.debatethis.Fragments;
-
+package com.example.jesusizquierdo.debatethis;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jesusizquierdo.debatethis.Classes.Comment;
 import com.example.jesusizquierdo.debatethis.Classes.DiscussionCard;
-import com.example.jesusizquierdo.debatethis.LoginActivity;
-import com.example.jesusizquierdo.debatethis.MainActivity;
-import com.example.jesusizquierdo.debatethis.R;
 import com.example.jesusizquierdo.debatethis.RecycleViewAdapters.FirebaseCommentViewHolder;
-import com.example.jesusizquierdo.debatethis.RecycleViewAdapters.FirebaseDebateCardViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,11 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
-public class FullDescriptionFragment extends Fragment {
+public class FullDiscussion extends AppCompatActivity {
     private DatabaseReference databaseReference;
     ProgressDialog progressDialog;
     RecyclerView mRecyclerView;
@@ -49,37 +40,43 @@ public class FullDescriptionFragment extends Fragment {
     CardView cardView;
     ArrayList<Comment> list;
 
-    public FullDescriptionFragment() {
-        // Required empty public constructor
-    }
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View viewRoot = inflater.inflate(R.layout.fragment_full_description, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_full_discussion);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Discussion");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ((MainActivity)getContext()).getSupportActionBar().setTitle("Discussion");
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
-        mRecyclerView = (RecyclerView) viewRoot.findViewById(R.id.comments_rv);
-        fab = (FloatingActionButton) viewRoot.findViewById(R.id.fab_new_comment_fullDescription);
-        fabCancel = (FloatingActionButton) viewRoot.findViewById(R.id.fab_exit_comment_fullDescription);
-        newComment = (EditText) viewRoot.findViewById(R.id.et_new_comment_fullDescription);
-        cardView = (CardView) viewRoot.findViewById(R.id.card_head_fullDescription);
+        mRecyclerView = (RecyclerView) findViewById(R.id.comments_rv);
+        fab = (FloatingActionButton) findViewById(R.id.fab_new_comment_fullDescription);
+        fabCancel = (FloatingActionButton) findViewById(R.id.fab_exit_comment_fullDescription);
+        newComment = (EditText) findViewById(R.id.et_new_comment_fullDescription);
+        cardView = (CardView) findViewById(R.id.card_head_fullDescription);
 
-        TextView category = (TextView) viewRoot.findViewById(R.id.tv_category_fullDescription);
-        TextView articleTitle = (TextView) viewRoot.findViewById(R.id.tv_article_title_fullDescription);
-        TextView userDescription = (TextView) viewRoot.findViewById(R.id.tv_description_fullDescription);
-        TextView cardTitle = (TextView) viewRoot.findViewById(R.id.tv_card_title_fullDescription);
-        TextView username = (TextView) viewRoot.findViewById(R.id.tv_name_of_card_creator_fullDescription);
+        TextView category = (TextView) findViewById(R.id.tv_category_fullDescription);
+        TextView articleTitle = (TextView) findViewById(R.id.tv_article_title_fullDescription);
+        TextView userDescription = (TextView) findViewById(R.id.tv_description_fullDescription);
+        TextView cardTitle = (TextView) findViewById(R.id.tv_card_title_fullDescription);
+        TextView username = (TextView) findViewById(R.id.tv_name_of_card_creator_fullDescription);
 
-        progressDialog = new ProgressDialog(getActivity());
+        progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading comments.....");
         progressDialog.show();
 
-        final DiscussionCard discussionCard = (DiscussionCard) getArguments().get("DiscussionCard");
+        final Intent intent  = getIntent();
+        Bundle bundle = this.getIntent().getExtras();
+        final DiscussionCard discussionCard = (DiscussionCard) bundle.getSerializable("discussionInfo");
 
         category.setText(discussionCard.getCategory());
         articleTitle.setText(discussionCard.getArticleTitle());
@@ -103,19 +100,21 @@ public class FullDescriptionFragment extends Fragment {
                     fabCancel.setVisibility(View.VISIBLE);
                     newComment.setVisibility(View.VISIBLE);
                     mRecyclerView.setVisibility(View.GONE);
-                    fab.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_check_black_48dp));
+                    fab.setImageDrawable(ContextCompat.getDrawable(FullDiscussion.this, R.drawable.ic_check_black_48dp));
 
                 }else{
                     if(TextUtils.isEmpty(newComment.getText().toString().trim())){
-                        Toast.makeText(getContext(),"You must write something",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FullDiscussion.this,"You must write something",Toast.LENGTH_SHORT).show();
 
                     }else{
-                        Toast.makeText(getContext(),"Saving Comment",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FullDiscussion.this,"Saving Comment",Toast.LENGTH_SHORT).show();
                         fabCancel.setVisibility(View.GONE);
                         newComment.setVisibility(View.GONE);
                         mRecyclerView.setVisibility(View.VISIBLE);
-                        fab.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.ic_border_color_black_48dp));
-                        String userName = ((MainActivity)getActivity()).getUserName();
+                        fab.setImageDrawable(ContextCompat.getDrawable(FullDiscussion.this,R.drawable.ic_border_color_black_48dp));
+
+
+                        String userName = intent.getStringExtra("username");
 
                         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Comments").child(discussionCard.getUniqueKey()).push();
                         Comment comment = new Comment(newComment.getText().toString().trim(),userName);
@@ -131,35 +130,39 @@ public class FullDescriptionFragment extends Fragment {
                 fabCancel.setVisibility(View.GONE);
                 newComment.setVisibility(View.GONE);
                 mRecyclerView.setVisibility(View.VISIBLE);
-                fab.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.ic_border_color_black_48dp));
+                fab.setImageDrawable(ContextCompat.getDrawable(FullDiscussion.this,R.drawable.ic_border_color_black_48dp));
             }
         });
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+
+                Toast.makeText(FullDiscussion.this,discussionCard.getUrl(),Toast.LENGTH_SHORT).show();
+                startCustomChromeTab(discussionCard.getUrl());
+
+                /*final DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
                 reference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String url = dataSnapshot.child("Discussion Info").child(discussionCard.getUniqueKey()).child("url").getValue(String.class);
-                        Toast.makeText(getContext(),"BUGGGG",Toast.LENGTH_SHORT).show();
-                       // ((MainActivity)getContext()).startCustomChromeTabTest(url);
-                    //    ((MainActivity)getContext()).startWebViewFragment(url);
-                    //    startActivity(new Intent(getContext(), LoginActivity.class));
-                      //  getActivity().finish();
-                      //  dismiss();
+                        Toast.makeText(FullDiscussion.this,"BUGGGG",Toast.LENGTH_SHORT).show();
+                        // ((MainActivity)getContext()).startCustomChromeTabTest(url);
+                        //    ((MainActivity)getContext()).startWebViewFragment(url);
+                        //    startActivity(new Intent(getContext(), LoginActivity.class));
+                        //  getActivity().finish();
+                        //  dismiss();
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
 
                     }
-                });
+                });*/
             }
         });
 
-        return viewRoot;
+
     }
 
     private void setUpFirebaseAdapter() {
@@ -173,7 +176,7 @@ public class FullDescriptionFragment extends Fragment {
 
         };
         mRecyclerView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FullDiscussion.this);
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -182,22 +185,28 @@ public class FullDescriptionFragment extends Fragment {
 
 
     }
+    public void startCustomChromeTab(String url) {
+        Uri uri = Uri.parse(url);
 
-    @Override
-    public void onPause() {
-        super.onPause();
+        // create an intent builder
+        CustomTabsIntent.Builder intentBuilder = new CustomTabsIntent.Builder();
 
+        // Begin customizing
+        // set toolbar colors
+        intentBuilder.setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        intentBuilder.setSecondaryToolbarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+
+        // set start and exit animations
+        intentBuilder.setStartAnimations(this,android.R.anim.slide_in_left,
+                android.R.anim.slide_out_right);
+        intentBuilder.setExitAnimations(this, android.R.anim.slide_in_left,
+                android.R.anim.slide_out_right);
+
+        // build custom tabs intent
+        CustomTabsIntent customTabsIntent = intentBuilder.build();
+
+        // launch the url
+        customTabsIntent.launchUrl(this, uri);
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-    }
 }

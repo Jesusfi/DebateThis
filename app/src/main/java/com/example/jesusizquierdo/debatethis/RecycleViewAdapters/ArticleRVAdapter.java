@@ -114,7 +114,9 @@ public class ArticleRVAdapter extends RecyclerView.Adapter<ArticleRVAdapter.MyVi
                             }
                         }
 
-                        if (articleAlreadyMade) {
+                        if (!articleAlreadyMade) {
+                            ((MainActivity) context).startNewDiscussionActivity(articles1);
+                        } else {
                             Toast.makeText(context, "ITEM EXISTS ALREADY", Toast.LENGTH_LONG).show();
                             DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference().child("Discussion").child(cardInfo.getDate()).child(cardInfo.getKey());
                             databaseReference1.addValueEventListener(new ValueEventListener() {
@@ -129,8 +131,6 @@ public class ArticleRVAdapter extends RecyclerView.Adapter<ArticleRVAdapter.MyVi
 
                                 }
                             });
-                        } else {
-                            ((MainActivity) context).startNewDiscussionFragment(articles1);
                         }
 
                     }
@@ -143,8 +143,11 @@ public class ArticleRVAdapter extends RecyclerView.Adapter<ArticleRVAdapter.MyVi
 
             } else {
 
+
                 String url = articles.get(getAdapterPosition()).getUrl();
-                ((MainActivity) context).startWebViewFragment(url);
+                ((MainActivity)context).startCustomChromeTab(url);
+
+               // ((MainActivity) context).startWebViewFragment(url);
 
             }
 

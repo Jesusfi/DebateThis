@@ -70,9 +70,15 @@ public class ProfileFragment extends Fragment {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String userID = ((MainActivity)getContext()).getUserID();
-                Object bioText = dataSnapshot.child("Users").child(userID).child("userBio").getValue();
-                bio.setText(bioText.toString());
+                String userID = "Unable to fetch name";
+                try{
+                    userID = ((MainActivity)getContext()).getUserID();
+                    Object bioText = dataSnapshot.child("Users").child(userID).child("userBio").getValue();
+                    bio.setText(bioText.toString());
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
 
             @Override
