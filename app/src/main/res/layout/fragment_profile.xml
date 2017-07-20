@@ -81,6 +81,7 @@
                            android:textColor="@color/primary_text" />
 
                        <ImageView
+                           android:padding="4dp"
                            android:id="@+id/imageView_profile_profileFragment"
                            android:layout_width="0dp"
                            android:layout_height="100dp"

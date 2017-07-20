@@ -13,6 +13,7 @@ public class User {
     ArrayList<String> topicsAgree = new ArrayList<>();
     String userBio;
     String credentails;
+    String photoUrl;
 
     public User(){}
 
@@ -22,7 +23,12 @@ public class User {
         this.email = email;
         this.credentails = credentails;
         this.userBio = "No Bio entered yet";
+        photoUrl = null;
 
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
     }
 
     public void setUserBio(String userBio) {

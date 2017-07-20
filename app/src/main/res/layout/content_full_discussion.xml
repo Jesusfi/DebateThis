@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,7 +9,7 @@
     tools:showIn="@layout/activity_full_discussion">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="900dp"
         android:orientation="vertical">
 
         <android.support.v7.widget.CardView
@@ -20,31 +20,34 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_margin="4dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tv_card_title_fullDescription"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_marginBottom="4dp"
+                    android:layout_marginBottom="2dp"
                     android:layout_weight="1"
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:text="It time that Trump steps down"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/tv_description_fullDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:text="Description"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_description_fullDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:text="Description"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp" />
+
+
 
                 <TextView
                     android:id="@+id/tv_article_title_fullDescription"
@@ -80,6 +83,14 @@
                         android:text="Politics"
                         android:textSize="12sp" />
                 </LinearLayout>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Hide"
+                    android:visibility="gone"
+                    android:minHeight="0dp"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                    />
 
                 <TextView
                     android:id="@+id/tv_source_discussionCard"
@@ -133,7 +144,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/comments_rv"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_margin="2dp"
             android:layout_weight="1" />
 
@@ -147,4 +158,4 @@
             android:visibility="gone" />
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

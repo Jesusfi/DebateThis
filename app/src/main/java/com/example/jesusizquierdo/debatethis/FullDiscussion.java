@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -21,6 +22,8 @@ import android.widget.Toast;
 
 import com.example.jesusizquierdo.debatethis.Classes.Comment;
 import com.example.jesusizquierdo.debatethis.Classes.DiscussionCard;
+import com.example.jesusizquierdo.debatethis.DialogFragments.BioDialogFragment;
+import com.example.jesusizquierdo.debatethis.DialogFragments.CommentDialogFragment;
 import com.example.jesusizquierdo.debatethis.RecycleViewAdapters.FirebaseCommentViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -96,7 +99,12 @@ public class FullDiscussion extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(newComment.getVisibility() == View.GONE){
+                FragmentManager fm = getSupportFragmentManager();
+
+                CommentDialogFragment dialogFragment = new CommentDialogFragment();
+
+                dialogFragment.show(fm, "Bio");
+               /* if(newComment.getVisibility() == View.GONE){
                     fabCancel.setVisibility(View.VISIBLE);
                     newComment.setVisibility(View.VISIBLE);
                     mRecyclerView.setVisibility(View.GONE);
@@ -119,9 +127,15 @@ public class FullDiscussion extends AppCompatActivity {
                         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Comments").child(discussionCard.getUniqueKey()).push();
                         Comment comment = new Comment(newComment.getText().toString().trim(),userName);
                         reference.setValue(comment);
+                        Intent intent = getIntent();
+                        overridePendingTransition(0, 0);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        finish();
+                        overridePendingTransition(0, 0);
+                        startActivity(intent);
                     }
 
-                }
+                }*/
             }
         });
         fabCancel.setOnClickListener(new View.OnClickListener() {
@@ -207,6 +221,23 @@ public class FullDiscussion extends AppCompatActivity {
 
         // launch the url
         customTabsIntent.launchUrl(this, uri);
+    }
+    public void saveComment(String commentFromFragment){
+
+        final Intent intent  = getIntent();
+        Bundle bundle = this.getIntent().getExtras();
+        final DiscussionCard discussionCard = (DiscussionCard) bundle.getSerializable("discussionInfo");
+
+        String userName = intent.getStringExtra("username");
+
+        Comment comment = new Comment(commentFromFragment,userName);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Comments").child(discussionCard.getUniqueKey()).push();
+        reference.setValue(comment);
+        overridePendingTransition(0, 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(intent);
     }
 
 }
