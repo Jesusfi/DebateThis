@@ -49,16 +49,17 @@ public class NewDiscussion extends AppCompatActivity {
 
         arrayList = new ArrayList<>();
         setTime();
+
         getSupportActionBar().setTitle("New Discussion");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+
+
         userOpinion = (EditText) findViewById(R.id.et_opinion_newDiscussion);
         postTitle = (EditText) findViewById(R.id.et_userTitle_newDiscussion);
         pickCategory = (Spinner) findViewById(R.id.spinner_categorypicker_setTitle);

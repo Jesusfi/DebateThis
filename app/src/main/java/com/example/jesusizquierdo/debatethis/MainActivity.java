@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
         Bundle bundle = new Bundle();
         bundle.putParcelable("articles", articles);
-        intent.putExtra("username",getUserName());
+        intent.putExtra("username", getUserName());
         intent.putExtras(bundle);
 
 
@@ -164,20 +164,22 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, FullDiscussion.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("discussionInfo",discussionCard);
-        intent.putExtra("username",getUserName());
+        bundle.putSerializable("discussionInfo", discussionCard);
+        intent.putExtra("username", getUserName());
         intent.putExtras(bundle);
 
         startActivity(intent);
     }
 
     public void startNewDebateFragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
+       /* FragmentManager fragmentManager = getSupportFragmentManager();
         FullDescriptionFragment fullDescriptionFragment = new FullDescriptionFragment();
         fragmentManager.beginTransaction()
                 .replace(R.id.content, new NewDebateFragment())
                 .addToBackStack(null)
-                .commit();
+                .commit();*/
+        Intent intent = new Intent(this, NewDebate.class);
+        startActivity(intent);
     }
 
     public void startCategoriesFragment() {
@@ -196,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
         intentBuilder.setSecondaryToolbarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
 
         // set start and exit animations
-        intentBuilder.setStartAnimations(this,android.R.anim.slide_in_left,
+        intentBuilder.setStartAnimations(this, android.R.anim.slide_in_left,
                 android.R.anim.slide_out_right);
         intentBuilder.setExitAnimations(this, android.R.anim.slide_in_left,
                 android.R.anim.slide_out_right);
@@ -207,7 +209,8 @@ public class MainActivity extends AppCompatActivity {
         // launch the url
         customTabsIntent.launchUrl(this, uri);
     }
-    public void startCustomChromeTabTest(String url){
+
+    public void startCustomChromeTabTest(String url) {
         Uri uri = Uri.parse(url);
 
         // create an intent builder
@@ -219,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
         intentBuilder.setSecondaryToolbarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
 
         // set start and exit animations
-        intentBuilder.setStartAnimations(this,android.R.anim.slide_in_left,
+        intentBuilder.setStartAnimations(this, android.R.anim.slide_in_left,
                 android.R.anim.slide_out_right);
         intentBuilder.setExitAnimations(this, android.R.anim.slide_in_left,
                 android.R.anim.slide_out_right);
