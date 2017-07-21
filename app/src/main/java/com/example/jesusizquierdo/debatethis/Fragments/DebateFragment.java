@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.jesusizquierdo.debatethis.Classes.Debate;
 import com.example.jesusizquierdo.debatethis.Classes.DebateInfo;
@@ -44,13 +45,12 @@ public class DebateFragment extends Fragment {
         // Inflate the layout for this fragment
         View viewRoot = inflater.inflate(R.layout.fragment_debate, container, false);
 
-      //  databaseReference = FirebaseDatabase.getInstance().getReference();
+        //  databaseReference = FirebaseDatabase.getInstance().getReference();
         mRecyclerView = (RecyclerView) viewRoot.findViewById(R.id.rv_display_title_debateFragment);
         list = new ArrayList<>();
 
-        MaterialSpinner spinner = (MaterialSpinner) viewRoot.findViewById(R.id.spinner_debateFragment);
+        final MaterialSpinner spinner = (MaterialSpinner) viewRoot.findViewById(R.id.spinner_debateFragment);
         FloatingActionButton floatingActionButton = (FloatingActionButton) viewRoot.findViewById(R.id.fab_add_debateFragment);
-
 
 
         spinner.setItems(
@@ -65,16 +65,24 @@ public class DebateFragment extends Fragment {
                 "Immigration");
 
         setUpFirebaseAdapter("Temp");
+        spinner.getSelectedIndex();
+
         spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
-            @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
                 Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
+
             }
         });
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)getContext()).startNewDebateActivity();
+                List<Object> list = spinner.getItems();
+
+                //  Toast.makeText(getContext(),"Item selected " + list.get(spinner.getSelectedIndex()).toString() ,Toast.LENGTH_SHORT).show();
+                ((MainActivity) getContext()).startNewDebateActivity(list.get(spinner.getSelectedIndex()).toString());
+
             }
         });
         return viewRoot;
@@ -96,15 +104,13 @@ public class DebateFragment extends Fragment {
             }
 
 
-
-
         };
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 //                progressDialog.dismiss();
-           }
+            }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -122,4 +128,4 @@ public class DebateFragment extends Fragment {
     }
 
 
-   }
+}

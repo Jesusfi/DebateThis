@@ -1,5 +1,6 @@
 package com.example.jesusizquierdo.debatethis;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -64,6 +65,11 @@ public class NewDebate extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         Button addPoint = (Button) findViewById(R.id.btn_add_point_newDebate);
 
+        Intent intent = getIntent();
+
+        final String topic = intent.getStringExtra("topic");
+
+
         addPoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,6 +88,8 @@ public class NewDebate extends AppCompatActivity {
 
                 if(TextUtils.isEmpty(titleString)){
                     Toast.makeText(NewDebate.this,"You must add a title",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewDebate.this,topic,Toast.LENGTH_SHORT).show();
+
                 }else{
 
                     Snackbar.make(view, "Saving debate", Snackbar.LENGTH_LONG)
@@ -90,13 +98,14 @@ public class NewDebate extends AppCompatActivity {
 
                     DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference()
                             .child("Debate")
-                            .child("Politics")
+                            .child(topic)
                             .push();
                     String uniqueKey = firebaseDatabase.getKey();
                     DatabaseReference saveDebateInfo = FirebaseDatabase.getInstance().getReference()
                             .child("DebateInfo")
+                            .child(topic)
                             .child(uniqueKey);
-                    DebateInfo debateInfo = new DebateInfo(titleString,uniqueKey,"Politics");
+                    DebateInfo debateInfo = new DebateInfo(titleString,uniqueKey,topic);
                     Debate debate = new Debate(titleString,uniqueKey);
                     debate.setPros(points);
                     firebaseDatabase.setValue(debate);

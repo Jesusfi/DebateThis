@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void startNewDebateActivity() {
+    public void startNewDebateActivity(String topic) {
        /* FragmentManager fragmentManager = getSupportFragmentManager();
         FullDescriptionFragment fullDescriptionFragment = new FullDescriptionFragment();
         fragmentManager.beginTransaction()
@@ -179,6 +179,9 @@ public class MainActivity extends AppCompatActivity {
                 .addToBackStack(null)
                 .commit();*/
         Intent intent = new Intent(this, NewDebate.class);
+        intent.putExtra("topic",topic);
+        intent.putExtra("username",getUserName());
+        intent.putExtra("userID",getUserID());
         startActivity(intent);
     }
 
