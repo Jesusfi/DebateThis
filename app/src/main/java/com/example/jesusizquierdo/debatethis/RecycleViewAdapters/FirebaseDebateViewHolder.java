@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.jesusizquierdo.debatethis.Classes.Debate;
+import com.example.jesusizquierdo.debatethis.Classes.DebateInfo;
 import com.example.jesusizquierdo.debatethis.R;
 
 /**
@@ -20,7 +21,7 @@ public class FirebaseDebateViewHolder extends RecyclerView.ViewHolder {
         view = itemView;
         context = itemView.getContext();
     }
-    public void bindDebate(Debate debate){
+    public void bindDebate(DebateInfo debate){
         TextView title = (TextView) itemView.findViewById(R.id.tv_title_debate_card);
         title.setText(debate.getTitle());
     }

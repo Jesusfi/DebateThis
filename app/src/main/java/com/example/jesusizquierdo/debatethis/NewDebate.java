@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.jesusizquierdo.debatethis.Classes.Debate;
+import com.example.jesusizquierdo.debatethis.Classes.DebateInfo;
 import com.example.jesusizquierdo.debatethis.Classes.Points;
 import com.example.jesusizquierdo.debatethis.DialogFragments.CommentDialogFragment;
 import com.example.jesusizquierdo.debatethis.DialogFragments.NewPointDialogFragment;
@@ -92,9 +93,14 @@ public class NewDebate extends AppCompatActivity {
                             .child("Politics")
                             .push();
                     String uniqueKey = firebaseDatabase.getKey();
+                    DatabaseReference saveDebateInfo = FirebaseDatabase.getInstance().getReference()
+                            .child("DebateInfo")
+                            .child(uniqueKey);
+                    DebateInfo debateInfo = new DebateInfo(titleString,uniqueKey,"Politics");
                     Debate debate = new Debate(titleString,uniqueKey);
                     debate.setPros(points);
                     firebaseDatabase.setValue(debate);
+                    saveDebateInfo.setValue(debateInfo);
                     finish();
 
                 }

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.jesusizquierdo.debatethis.Classes.Debate;
+import com.example.jesusizquierdo.debatethis.Classes.DebateInfo;
 import com.example.jesusizquierdo.debatethis.Classes.DiscussionCard;
 import com.example.jesusizquierdo.debatethis.MainActivity;
 import com.example.jesusizquierdo.debatethis.R;
@@ -30,7 +31,7 @@ import java.util.List;
 public class DebateFragment extends Fragment {
     private DatabaseReference databaseReference;
     RecyclerView mRecyclerView;
-    List<Debate> list;
+    List<DebateInfo> list;
 
     public DebateFragment() {
         // Required empty public constructor
@@ -82,17 +83,19 @@ public class DebateFragment extends Fragment {
     // TODO: Rename method, update argument and hook method into UI event
 
     private void setUpFirebaseAdapter(String date) {
-        databaseReference = FirebaseDatabase.getInstance().getReference("Debate").child("Politics");
+        databaseReference = FirebaseDatabase.getInstance().getReference("DebateInfo");
 
-        FirebaseRecyclerAdapter mFirebaseAdapter = new FirebaseRecyclerAdapter<Debate, FirebaseDebateViewHolder>
-                (Debate.class, R.layout.debate_card_rv, FirebaseDebateViewHolder.class,
+        FirebaseRecyclerAdapter mFirebaseAdapter = new FirebaseRecyclerAdapter<DebateInfo, FirebaseDebateViewHolder>
+                (DebateInfo.class, R.layout.debate_card_rv, FirebaseDebateViewHolder.class,
                         databaseReference) {
 
             @Override
-            protected void populateViewHolder(FirebaseDebateViewHolder viewHolder, Debate model, int position) {
+            protected void populateViewHolder(FirebaseDebateViewHolder viewHolder, DebateInfo model, int position) {
                 list.add(model);
                 viewHolder.bindDebate(model);
             }
+
+
 
 
         };
