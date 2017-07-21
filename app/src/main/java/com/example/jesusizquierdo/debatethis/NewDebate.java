@@ -108,6 +108,9 @@ public class NewDebate extends AppCompatActivity {
                     DebateInfo debateInfo = new DebateInfo(titleString,uniqueKey,topic);
                     Debate debate = new Debate(titleString,uniqueKey);
                     debate.setPros(points);
+                    List<Points> cons = new ArrayList<Points>();
+                    cons.add(new Points("Nothing here yet","Nothing here yet", "Nothing here yet"));
+                    debate.setCons(cons);
                     firebaseDatabase.setValue(debate);
                     saveDebateInfo.setValue(debateInfo);
                     finish();

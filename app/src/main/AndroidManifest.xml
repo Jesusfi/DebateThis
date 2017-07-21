@@ -33,23 +33,27 @@
             android:name=".NewDiscussion"
             android:label="@string/title_activity_tst"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            tools:targetApi="jelly_bean"
-            android:screenOrientation="portrait"/>
+            tools:targetApi="jelly_bean" />
         <activity
             android:name=".FullDiscussion"
             android:label="@string/title_activity_full_discussion"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            tools:targetApi="jelly_bean"
-            android:screenOrientation="portrait"/>
+            tools:targetApi="jelly_bean" />
         <activity
             android:name=".NewDebate"
             android:label="@string/title_activity_new_debate"
-            android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
             tools:targetApi="jelly_bean" />
+        <activity
+            android:name=".FullDebate"
+            android:label="@string/title_activity_full_debate"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

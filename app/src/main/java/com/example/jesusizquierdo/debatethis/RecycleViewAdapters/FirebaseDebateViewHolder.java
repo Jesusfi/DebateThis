@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.example.jesusizquierdo.debatethis.Classes.Debate;
 import com.example.jesusizquierdo.debatethis.Classes.DebateInfo;
+import com.example.jesusizquierdo.debatethis.MainActivity;
 import com.example.jesusizquierdo.debatethis.R;
 
 /**
@@ -21,8 +22,15 @@ public class FirebaseDebateViewHolder extends RecyclerView.ViewHolder {
         view = itemView;
         context = itemView.getContext();
     }
-    public void bindDebate(DebateInfo debate){
+    public void bindDebate(final DebateInfo debate){
         TextView title = (TextView) itemView.findViewById(R.id.tv_title_debate_card);
         title.setText(debate.getTitle());
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)context).startFullDebateActivity(debate.getUniqueID(),debate.getTopic());
+            }
+        });
     }
 }

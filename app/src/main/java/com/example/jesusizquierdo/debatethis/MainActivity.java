@@ -185,6 +185,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void startFullDebateActivity(String key, String topic){
+        Intent intent = new Intent(this,FullDebate.class);
+        intent.putExtra("key",key);
+        intent.putExtra("topic",topic);
+        startActivity(intent);
+    }
+
     public void startCategoriesFragment() {
 
     }

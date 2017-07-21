@@ -50,4 +50,5 @@
     <string name="title_activity_tst">NewDiscussion</string>
     <string name="title_activity_full_discussion">FullDiscussion</string>
     <string name="title_activity_new_debate">NewDebate</string>
+    <string name="title_activity_full_debate">FullDebate</string>
 </resources>
