@@ -64,7 +64,7 @@ public class DebateFragment extends Fragment {
                 "Philosophy",
                 "Immigration");
 
-        setUpFirebaseAdapter("Temp");
+        setUpFirebaseAdapter("Politics");
         spinner.getSelectedIndex();
 
         spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
@@ -72,6 +72,7 @@ public class DebateFragment extends Fragment {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
                 Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
+                setUpFirebaseAdapter(item);
 
             }
         });
@@ -90,8 +91,8 @@ public class DebateFragment extends Fragment {
 
     // TODO: Rename method, update argument and hook method into UI event
 
-    private void setUpFirebaseAdapter(String date) {
-        databaseReference = FirebaseDatabase.getInstance().getReference("DebateInfo");
+    private void setUpFirebaseAdapter(String topic) {
+        databaseReference = FirebaseDatabase.getInstance().getReference("DebateInfo").child(topic);
 
         FirebaseRecyclerAdapter mFirebaseAdapter = new FirebaseRecyclerAdapter<DebateInfo, FirebaseDebateViewHolder>
                 (DebateInfo.class, R.layout.debate_card_rv, FirebaseDebateViewHolder.class,
