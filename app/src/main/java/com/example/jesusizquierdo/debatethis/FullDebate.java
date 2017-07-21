@@ -38,6 +38,14 @@ public class FullDebate extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         Intent intent = getIntent();
         final String key = intent.getStringExtra("key");
         final String topic = intent.getStringExtra("topic");
@@ -113,6 +121,13 @@ public class FullDebate extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, temp.get(0).getTitle(), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+//                Solved it! Super simple. Just had to add push() to the end of my DatabaseRefercence like so. It gives every comment a key.
+//
+//                commentRef = pollRef.child("comments").push();
+//                commentRef.setValue(comment);
+
+
                 if(recyclerView.getVisibility() == View.GONE){
                     //they are gonna write a con
 
