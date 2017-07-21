@@ -38,6 +38,7 @@
                     android:textStyle="bold" />
 
                 <EditText
+                    android:id="@+id/et_title_newDebate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="title ex. More nutritious food in schools" />

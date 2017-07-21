@@ -8,8 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.jesusizquierdo.debatethis.Classes.Debate;
 import com.example.jesusizquierdo.debatethis.Classes.Points;
@@ -56,6 +59,7 @@ public class NewDebate extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
 
+        final EditText title = (EditText) findViewById(R.id.et_title_newDebate);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         Button addPoint = (Button) findViewById(R.id.btn_add_point_newDebate);
 
@@ -73,14 +77,27 @@ public class NewDebate extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String titleString = title.getText().toString().trim();
 
-                Snackbar.make(view, "Saving debate?", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                if(TextUtils.isEmpty(titleString)){
+                    Toast.makeText(NewDebate.this,"You must add a title",Toast.LENGTH_SHORT).show();
+                }else{
 
-                DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference()
-                        .child("Debate")
-                        .child("Politics")
-                        .push();
+                    Snackbar.make(view, "Saving debate", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+
+
+                    DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference()
+                            .child("Debate")
+                            .child("Politics")
+                            .push();
+                    String uniqueKey = firebaseDatabase.getKey();
+                    Debate debate = new Debate(titleString,uniqueKey);
+                    debate.setPros(points);
+                    firebaseDatabase.setValue(debate);
+                    finish();
+
+                }
 
 
            //     firebaseDatabase.setValue(new Debate("Crime",points));

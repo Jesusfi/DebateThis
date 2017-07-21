@@ -23,6 +23,7 @@
         android:textStyle="bold"
         android:maxLines="3"
         android:padding="4dp"
+        android:id="@+id/tv_title_debate_card"
         android:ellipsize="end"
         android:text="Should animal testing be illegal?"
         android:layout_height="match_parent"
