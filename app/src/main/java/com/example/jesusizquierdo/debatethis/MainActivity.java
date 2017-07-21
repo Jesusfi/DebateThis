@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void startNewDebateFragment() {
+    public void startNewDebateActivity() {
        /* FragmentManager fragmentManager = getSupportFragmentManager();
         FullDescriptionFragment fullDescriptionFragment = new FullDescriptionFragment();
         fragmentManager.beginTransaction()

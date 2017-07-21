@@ -3,12 +3,29 @@ package com.example.jesusizquierdo.debatethis;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
+
+import com.example.jesusizquierdo.debatethis.Classes.Debate;
+import com.example.jesusizquierdo.debatethis.Classes.Points;
+import com.example.jesusizquierdo.debatethis.DialogFragments.CommentDialogFragment;
+import com.example.jesusizquierdo.debatethis.DialogFragments.NewPointDialogFragment;
+import com.example.jesusizquierdo.debatethis.RecycleViewAdapters.NewPointRVAdapter;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NewDebate extends AppCompatActivity {
-
+    List<Points> points;
+    RecyclerView recyclerView;
+    NewPointRVAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,16 +42,57 @@ public class NewDebate extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        points = new ArrayList<Points>();
+        points.add(new Points("It decrease crime","crime decreses","new york times"));
+        points.add(new Points("It decrease crime","crime decreses","new york times"));
 
+        points.add(new Points("It decrease crime","crime decreses","new york times"));
+        points.add(new Points("It decrease crime","crime decreses","new york times"));
+        points.add(new Points("It decrease crime","crime decreses","new york times"));
+
+        recyclerView = (RecyclerView) findViewById(R.id.rv_points_newDebate);
+        adapter = new NewPointRVAdapter(this,points);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        Button addPoint = (Button) findViewById(R.id.btn_add_point_newDebate);
+
+        addPoint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fm = getSupportFragmentManager();
+
+                //CommentDialogFragment dialogFragment = new CommentDialogFragment();
+                NewPointDialogFragment dialogFragment = new NewPointDialogFragment();
+                dialogFragment.show(fm, "Point");
+            }
+        });
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+
+                Snackbar.make(view, "Saving debate?", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+                DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference()
+                        .child("Debate")
+                        .child("Politics")
+                        .push();
+
+
+           //     firebaseDatabase.setValue(new Debate("Crime",points));
             }
         });
+    }
+
+    public void updateRVWithNewPoint(String header, String arg, String src){
+        Points tempPoint = new Points(header,arg,src);
+        points.add(tempPoint);
+        adapter.notifyDataSetChanged();
+
     }
 
 }
