@@ -5,7 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.jesusizquierdo.debatethis.Classes.Articles;
 import com.example.jesusizquierdo.debatethis.Classes.Points;
@@ -48,11 +50,24 @@ public class NewPointRVAdapter extends RecyclerView.Adapter<NewPointRVAdapter.My
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView point,argument,source;
+        LinearLayout container;
         public MyViewHolder(View itemView) {
             super(itemView);
+            container = (LinearLayout) itemView.findViewById(R.id.ll_container_pointsRV);
             point = (TextView) itemView.findViewById(R.id.tv_point_pointsRV);
             argument = (TextView) itemView.findViewById(R.id.tv_argument_pointsRV);
             source = (TextView) itemView.findViewById(R.id.tv_source_pointsRV);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(context,"Testing ", Toast.LENGTH_SHORT).show();
+                    if(container.getVisibility() == View.GONE){
+                        container.setVisibility(View.VISIBLE);
+                    }else{
+                        container.setVisibility(View.GONE);
+                    }
+                }
+            });
 
         }
     }
