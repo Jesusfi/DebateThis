@@ -124,6 +124,7 @@ public class FullDebate extends AppCompatActivity {
            @Override
            public void onClick(View view) {
                Intent intentNewPoint = new Intent(FullDebate.this, NewPoint.class);
+               intentNewPoint.putExtra("boolean",false);
                startActivity(intentNewPoint);
            }
        });

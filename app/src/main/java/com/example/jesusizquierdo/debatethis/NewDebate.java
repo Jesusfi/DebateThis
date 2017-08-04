@@ -72,6 +72,7 @@ public class NewDebate extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent1 = new Intent(NewDebate.this, NewPoint.class);
+                intent1.putExtra("boolean",true);
                 startActivityForResult(intent1, REQUEST_CODE);
             }
         });

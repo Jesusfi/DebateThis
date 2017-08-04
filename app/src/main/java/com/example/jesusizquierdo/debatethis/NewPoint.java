@@ -34,6 +34,8 @@ public class NewPoint extends AppCompatActivity {
         final EditText argument = (EditText) findViewById(R.id.et_argument_NewPoint);
         final EditText sources = (EditText) findViewById(R.id.et_sources_NewPoint);
 
+        final Boolean isNewPoint = getIntent().getExtras().getBoolean("boolean");
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,12 +49,18 @@ public class NewPoint extends AppCompatActivity {
                 if(TextUtils.isEmpty(pointString) || TextUtils.isEmpty(argumentString) || TextUtils.isEmpty(sourcesString)){
                     Toast.makeText(NewPoint.this, "Please add a point, argument and source",Toast.LENGTH_SHORT).show();
                 }else{
-                    Intent intent = new Intent();
-                    intent.putExtra("Point", pointString);
-                    intent.putExtra("Argument",argumentString);
-                    intent.putExtra("Sources", sourcesString);
-                    setResult(RESULT_OK,intent);
-                    finish();
+
+                    if(isNewPoint){
+
+                        Intent intent = new Intent();
+                        intent.putExtra("Point", pointString);
+                        intent.putExtra("Argument",argumentString);
+                        intent.putExtra("Sources", sourcesString);
+                        setResult(RESULT_OK,intent);
+                        finish();
+                    }else{
+                        Toast.makeText(NewPoint.this,"figure out to make it work", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
