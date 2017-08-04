@@ -1,5 +1,6 @@
 package com.example.jesusizquierdo.debatethis;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -31,6 +32,7 @@ public class NewDebate extends AppCompatActivity {
     List<Points> points;
     RecyclerView recyclerView;
     NewPointRVAdapter adapter;
+    int REQUEST_CODE = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,12 +50,7 @@ public class NewDebate extends AppCompatActivity {
         });
 
         points = new ArrayList<Points>();
-        points.add(new Points("It decrease crime","crime decreses","new york times"));
-        points.add(new Points("It decrease crime","crime decreses","new york times"));
 
-        points.add(new Points("It decrease crime","crime decreses","new york times"));
-        points.add(new Points("It decrease crime","crime decreses","new york times"));
-        points.add(new Points("It decrease crime","crime decreses","new york times"));
 
         recyclerView = (RecyclerView) findViewById(R.id.rv_points_newDebate);
         adapter = new NewPointRVAdapter(this,points);
@@ -73,11 +70,12 @@ public class NewDebate extends AppCompatActivity {
         addPoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fm = getSupportFragmentManager();
+                /*FragmentManager fm = getSupportFragmentManager();
 
-                //CommentDialogFragment dialogFragment = new CommentDialogFragment();
                 NewPointDialogFragment dialogFragment = new NewPointDialogFragment();
-                dialogFragment.show(fm, "Point");
+                dialogFragment.show(fm, "Point");*/
+                Intent intent1 = new Intent(NewDebate.this, NewPoint.class);
+                startActivityForResult(intent1,REQUEST_CODE);
             }
         });
 
@@ -86,8 +84,8 @@ public class NewDebate extends AppCompatActivity {
             public void onClick(View view) {
                 String titleString = title.getText().toString().trim();
 
-                if(TextUtils.isEmpty(titleString)){
-                    Toast.makeText(NewDebate.this,"You must add a title",Toast.LENGTH_SHORT).show();
+                if(TextUtils.isEmpty(titleString)|| points.size() == 0){
+                    Toast.makeText(NewDebate.this,"You must add a title and at least one point",Toast.LENGTH_SHORT).show();
                     Toast.makeText(NewDebate.this,topic,Toast.LENGTH_SHORT).show();
 
                 }else{
@@ -122,6 +120,23 @@ public class NewDebate extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE){
+            if(resultCode == RESULT_OK){
+                String point  = data.getStringExtra("Point");
+                String argument = data.getStringExtra("Argument");
+                String src = data.getStringExtra("Sources");
+
+                updateRVWithNewPoint(point,argument,src);
+
+            }
+        }
+
+        }
+
 
     public void updateRVWithNewPoint(String header, String arg, String src){
         Points tempPoint = new Points(header,arg,src);
