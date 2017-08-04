@@ -33,6 +33,7 @@ public class NewDebate extends AppCompatActivity {
     RecyclerView recyclerView;
     NewPointRVAdapter adapter;
     int REQUEST_CODE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +54,7 @@ public class NewDebate extends AppCompatActivity {
 
 
         recyclerView = (RecyclerView) findViewById(R.id.rv_points_newDebate);
-        adapter = new NewPointRVAdapter(this,points);
+        adapter = new NewPointRVAdapter(this, points);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -70,12 +71,8 @@ public class NewDebate extends AppCompatActivity {
         addPoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*FragmentManager fm = getSupportFragmentManager();
-
-                NewPointDialogFragment dialogFragment = new NewPointDialogFragment();
-                dialogFragment.show(fm, "Point");*/
                 Intent intent1 = new Intent(NewDebate.this, NewPoint.class);
-                startActivityForResult(intent1,REQUEST_CODE);
+                startActivityForResult(intent1, REQUEST_CODE);
             }
         });
 
@@ -84,11 +81,11 @@ public class NewDebate extends AppCompatActivity {
             public void onClick(View view) {
                 String titleString = title.getText().toString().trim();
 
-                if(TextUtils.isEmpty(titleString)|| points.size() == 0){
-                    Toast.makeText(NewDebate.this,"You must add a title and at least one point",Toast.LENGTH_SHORT).show();
-                    Toast.makeText(NewDebate.this,topic,Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(titleString) || points.size() == 0) {
+                    Toast.makeText(NewDebate.this, "You must add a title and at least one point", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewDebate.this, topic, Toast.LENGTH_SHORT).show();
 
-                }else{
+                } else {
 
                     Snackbar.make(view, "Saving debate", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
@@ -103,11 +100,11 @@ public class NewDebate extends AppCompatActivity {
                             .child("DebateInfo")
                             .child(topic)
                             .child(uniqueKey);
-                    DebateInfo debateInfo = new DebateInfo(titleString,uniqueKey,topic);
-                    Debate debate = new Debate(titleString,uniqueKey);
+                    DebateInfo debateInfo = new DebateInfo(titleString, uniqueKey, topic);
+                    Debate debate = new Debate(titleString, uniqueKey);
                     debate.setPros(points);
                     List<Points> cons = new ArrayList<Points>();
-                    cons.add(new Points("Nothing here yet","Nothing here yet", "Nothing here yet"));
+                    cons.add(new Points("Nothing here yet", "Nothing here yet", "Nothing here yet"));
                     debate.setCons(cons);
                     firebaseDatabase.setValue(debate);
                     saveDebateInfo.setValue(debateInfo);
@@ -116,7 +113,7 @@ public class NewDebate extends AppCompatActivity {
                 }
 
 
-           //     firebaseDatabase.setValue(new Debate("Crime",points));
+                //     firebaseDatabase.setValue(new Debate("Crime",points));
             }
         });
     }
@@ -124,22 +121,22 @@ public class NewDebate extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_CODE){
-            if(resultCode == RESULT_OK){
-                String point  = data.getStringExtra("Point");
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                String point = data.getStringExtra("Point");
                 String argument = data.getStringExtra("Argument");
                 String src = data.getStringExtra("Sources");
 
-                updateRVWithNewPoint(point,argument,src);
+                updateRVWithNewPoint(point, argument, src);
 
             }
         }
 
-        }
+    }
 
 
-    public void updateRVWithNewPoint(String header, String arg, String src){
-        Points tempPoint = new Points(header,arg,src);
+    public void updateRVWithNewPoint(String header, String arg, String src) {
+        Points tempPoint = new Points(header, arg, src);
         points.add(tempPoint);
         adapter.notifyDataSetChanged();
 

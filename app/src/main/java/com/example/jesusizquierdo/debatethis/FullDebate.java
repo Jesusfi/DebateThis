@@ -27,6 +27,7 @@ import java.util.List;
 
 public class FullDebate extends AppCompatActivity {
     TextView title;
+    Boolean isPro;
     ArrayList<Debate> temp;
     //List<Points> points;
     RecyclerView recyclerView, recyclerViewCons;
@@ -49,9 +50,11 @@ public class FullDebate extends AppCompatActivity {
         Intent intent = getIntent();
         final String key = intent.getStringExtra("key");
         final String topic = intent.getStringExtra("topic");
+        isPro = true;
 
         temp = new ArrayList<>();
 
+        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.fab_add_point_FullDebate);
         Button viewPros = (Button) findViewById(R.id.btn_view_pros_debateFull);
         Button viewCons = (Button) findViewById(R.id.btn_view_cons_debateFull);
         title = (TextView) findViewById(R.id.tv_title_fullDebate);
@@ -101,6 +104,7 @@ public class FullDebate extends AppCompatActivity {
                 if(recyclerViewCons.getVisibility() == View.GONE){
                     recyclerViewCons.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
+                    isPro = false;
                 }
             }
         });
@@ -110,35 +114,19 @@ public class FullDebate extends AppCompatActivity {
                 if(recyclerView.getVisibility() == View.GONE){
                     recyclerView.setVisibility(View.VISIBLE);
                     recyclerViewCons.setVisibility(View.GONE);
+                    isPro = true;
                 }
             }
         });
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, temp.get(0).getTitle(), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
-//                Solved it! Super simple. Just had to add push() to the end of my DatabaseRefercence like so. It gives every comment a key.
-//
-//                commentRef = pollRef.child("comments").push();
-//                commentRef.setValue(comment);
-
-
-                if(recyclerView.getVisibility() == View.GONE){
-                    //they are gonna write a con
-
-                }else{
-                    //they are gonna write a pro
-
-                }
-
-
-            }
-        });
+       floatingActionButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               Intent intentNewPoint = new Intent(FullDebate.this, NewPoint.class);
+               startActivity(intentNewPoint);
+           }
+       });
     }
 
 }
