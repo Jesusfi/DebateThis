@@ -53,51 +53,56 @@ public class NewPoint extends AppCompatActivity {
                 String argumentString = argument.getText().toString().trim();
                 String sourcesString = sources.getText().toString().trim();
 
-                if(TextUtils.isEmpty(pointString) || TextUtils.isEmpty(argumentString) || TextUtils.isEmpty(sourcesString)){
-                    Toast.makeText(NewPoint.this, "Please add a point, argument and source",Toast.LENGTH_SHORT).show();
-                }else{
+                if (TextUtils.isEmpty(pointString) || TextUtils.isEmpty(argumentString) || TextUtils.isEmpty(sourcesString)) {
+                    Toast.makeText(NewPoint.this, "Please add a point, argument and source", Toast.LENGTH_SHORT).show();
+                } else {
 
-                    if(isNewPoint){
+                    if (isNewPoint) {
 
                         Intent intent = new Intent();
                         intent.putExtra("Point", pointString);
-                        intent.putExtra("Argument",argumentString);
+                        intent.putExtra("Argument", argumentString);
                         intent.putExtra("Sources", sourcesString);
-                        setResult(RESULT_OK,intent);
+                        setResult(RESULT_OK, intent);
                         finish();
-                    }else{
-                        Toast.makeText(NewPoint.this,"figure out to make it work", Toast.LENGTH_SHORT).show();
-                        Points points = new Points(pointString,argumentString,sourcesString);
+                    } else {
+                        Toast.makeText(NewPoint.this, "figure out to make it work", Toast.LENGTH_SHORT).show();
+                        Points points = new Points(pointString, argumentString, sourcesString);
                         addNewPoint(isProList, points);
                     }
                 }
             }
         });
     }
-public void addNewPoint(Boolean isPro, Points point){
-    // go into Debate
+
+    public void addNewPoint(Boolean isPro, Points point) {
+        // go into Debate
         //first i need the topic
-    // next i need the unique id of the item
-    // next I need  t tell it to go to the pro
-    // create a unique id for the new point?
-    String topic = getIntent().getExtras().getString("topic");
-    String uniqueID = getIntent().getExtras().getString("UniqueID");
+        // next i need the unique id of the item
+        // next I need  t tell it to go to the pro
+        // create a unique id for the new point?
+        String topic = getIntent().getExtras().getString("topic");
+        String uniqueID = getIntent().getExtras().getString("UniqueID");
 
-    Debate debate = (Debate) getIntent().getExtras().getSerializable("debate");
+        Debate debate = (Debate) getIntent().getExtras().getSerializable("debate");
 
-    if(isPro){
-        DatabaseReference reference;
-        reference= FirebaseDatabase.getInstance().getReference()
-        .child("Debate")
-        .child("temp");
-
-        reference.setValue("String temp");
-    }else{
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-
-        reference.child("Debate").child(topic).child(uniqueID).child("cons").push();
-        reference.setValue(point);
-    }
+        if (isPro) {
+            DatabaseReference savePoints = FirebaseDatabase.getInstance().getReference()
+                    .child("DebatePoints")
+                    .child(topic)
+                    .child(uniqueID)
+                    .child("pros")
+                    .push();
+            savePoints.setValue(point);
+        } else {
+            DatabaseReference savePoints = FirebaseDatabase.getInstance().getReference()
+                    .child("DebatePoints")
+                    .child(topic)
+                    .child(uniqueID)
+                    .child("cons")
+                    .push();
+            savePoints.setValue(point);
+        }
 
 //    commentRef = pollRef.child("comments").push();
 //    commentRef.setValue(comment);

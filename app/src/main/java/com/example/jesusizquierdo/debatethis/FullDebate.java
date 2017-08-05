@@ -70,7 +70,7 @@ public class FullDebate extends AppCompatActivity {
         recyclerViewCons = (RecyclerView) findViewById(R.id.rv_points_cons_fullDebate);
 
         setUpFirebaseAdapterPros(topic, key);
-        setUpFirebaseAdapterCons(topic,key);
+        setUpFirebaseAdapterCons(topic, key);
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
                 .child("Debate")
@@ -140,9 +140,9 @@ public class FullDebate extends AppCompatActivity {
                 intentNewPoint.putExtra("boolean", false);
                 intentNewPoint.putExtra("isPro", isPro);
                 Debate debate = temp.get(0);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("debate", debate);
-                intent.putExtras(bundle);
+              //  Bundle bundle = new Bundle();
+               // bundle.putSerializable("debate", debate);
+              //  intent.putExtras(bundle);
 
                 intentNewPoint.putExtra("topic", topic);
                 intentNewPoint.putExtra("UniqueID", temp.get(0).getUniqueID());
@@ -152,7 +152,7 @@ public class FullDebate extends AppCompatActivity {
         });
     }
 
-    private void setUpFirebaseAdapterPros(String topic, String key ) {
+    private void setUpFirebaseAdapterPros(String topic, String key) {
         databaseReference = FirebaseDatabase.getInstance().getReference("DebatePoints").child(topic).child(key).child("pros");
 
         FirebaseRecyclerAdapter mFirebaseAdapter = new FirebaseRecyclerAdapter<Points, FirebasePointViewHolder>
@@ -187,6 +187,7 @@ public class FullDebate extends AppCompatActivity {
 
 
     }
+
     private void setUpFirebaseAdapterCons(String topic, String key) {
         databaseReference = FirebaseDatabase.getInstance().getReference("DebatePoints").child(topic).child(key).child("cons");
 
