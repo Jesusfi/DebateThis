@@ -115,6 +115,7 @@ public class NewDebate extends AppCompatActivity {
                                 .child("DebatePoints")
                                 .child(topic)
                                 .child(uniqueKey)
+                                .child("pros")
                                 .push();
                         savePoints.setValue(points.get(i));
                     }

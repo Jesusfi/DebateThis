@@ -69,7 +69,8 @@ public class FullDebate extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.rv_points_pros_fullDebate);
         recyclerViewCons = (RecyclerView) findViewById(R.id.rv_points_cons_fullDebate);
 
-        setUpFirebaseAdapter(topic, key);
+        setUpFirebaseAdapterPros(topic, key);
+        setUpFirebaseAdapterCons(topic,key);
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
                 .child("Debate")
@@ -125,6 +126,8 @@ public class FullDebate extends AppCompatActivity {
                     recyclerView.setVisibility(View.VISIBLE);
                     recyclerViewCons.setVisibility(View.GONE);
                     isPro = true;
+
+
                 }
             }
         });
@@ -149,8 +152,43 @@ public class FullDebate extends AppCompatActivity {
         });
     }
 
-    private void setUpFirebaseAdapter(String topic, String key ) {
-        databaseReference = FirebaseDatabase.getInstance().getReference("DebatePoints").child(topic).child(key);
+    private void setUpFirebaseAdapterPros(String topic, String key ) {
+        databaseReference = FirebaseDatabase.getInstance().getReference("DebatePoints").child(topic).child(key).child("pros");
+
+        FirebaseRecyclerAdapter mFirebaseAdapter = new FirebaseRecyclerAdapter<Points, FirebasePointViewHolder>
+                (Points.class, R.layout.point_view_rv, FirebasePointViewHolder.class,
+                        databaseReference) {
+
+            @Override
+            protected void populateViewHolder(FirebasePointViewHolder viewHolder, Points model, int position) {
+                viewHolder.bindPoint(model);
+            }
+
+
+        };
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+//                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FullDebate.this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(mFirebaseAdapter);
+
+
+    }
+    private void setUpFirebaseAdapterCons(String topic, String key) {
+        databaseReference = FirebaseDatabase.getInstance().getReference("DebatePoints").child(topic).child(key).child("cons");
 
         FirebaseRecyclerAdapter mFirebaseAdapter = new FirebaseRecyclerAdapter<Points, FirebasePointViewHolder>
                 (Points.class, R.layout.point_view_rv, FirebasePointViewHolder.class,
@@ -184,5 +222,4 @@ public class FullDebate extends AppCompatActivity {
 
 
     }
-
 }
