@@ -69,7 +69,7 @@ public class FullDebate extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.rv_points_pros_fullDebate);
         recyclerViewCons = (RecyclerView) findViewById(R.id.rv_points_cons_fullDebate);
 
-        setUpFirebaseAdapter();
+        setUpFirebaseAdapter(topic, key);
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
                 .child("Debate")
@@ -149,8 +149,8 @@ public class FullDebate extends AppCompatActivity {
         });
     }
 
-    private void setUpFirebaseAdapter() {
-        databaseReference = FirebaseDatabase.getInstance().getReference("DebatePoints").child("Topic");
+    private void setUpFirebaseAdapter(String topic, String key ) {
+        databaseReference = FirebaseDatabase.getInstance().getReference("DebatePoints").child(topic).child(key);
 
         FirebaseRecyclerAdapter mFirebaseAdapter = new FirebaseRecyclerAdapter<Points, FirebasePointViewHolder>
                 (Points.class, R.layout.point_view_rv, FirebasePointViewHolder.class,

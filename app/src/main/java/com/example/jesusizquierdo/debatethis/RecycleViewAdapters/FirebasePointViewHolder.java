@@ -26,7 +26,7 @@ public class FirebasePointViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindPoint(Points point) {
-        LinearLayout container = (LinearLayout) itemView.findViewById(R.id.ll_container_pointsRV);
+        final LinearLayout container = (LinearLayout) itemView.findViewById(R.id.ll_container_pointsRV);
         TextView pointtv = (TextView) itemView.findViewById(R.id.tv_point_pointsRV);
         TextView argument = (TextView) itemView.findViewById(R.id.tv_argument_pointsRV);
         TextView source = (TextView) itemView.findViewById(R.id.tv_source_pointsRV);
@@ -38,7 +38,12 @@ public class FirebasePointViewHolder extends RecyclerView.ViewHolder {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Test", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"Testing ", Toast.LENGTH_SHORT).show();
+                if(container.getVisibility() == View.GONE){
+                    container.setVisibility(View.VISIBLE);
+                }else{
+                    container.setVisibility(View.GONE);
+                }
             }
         });
     }

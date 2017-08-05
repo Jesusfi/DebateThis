@@ -113,7 +113,8 @@ public class NewDebate extends AppCompatActivity {
 
                         DatabaseReference savePoints = FirebaseDatabase.getInstance().getReference()
                                 .child("DebatePoints")
-                                .child("Topic")
+                                .child(topic)
+                                .child(uniqueKey)
                                 .push();
                         savePoints.setValue(points.get(i));
                     }
