@@ -20,16 +20,17 @@
 
     <TextView
         android:layout_width="0dp"
-        android:gravity="center"
         android:textColor="@color/primary_text"
         android:textStyle="bold"
         android:maxLines="3"
         android:padding="6dp"
-        android:textSize="18sp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textSize="16sp"
         android:id="@+id/tv_title_debate_card"
         android:ellipsize="end"
         android:text="Should animal testing be illegal?"
-        android:layout_height="match_parent"
+        android:layout_height="80dp"
         android:layout_weight="1"/>
 </LinearLayout>
 </android.support.v7.widget.CardView>

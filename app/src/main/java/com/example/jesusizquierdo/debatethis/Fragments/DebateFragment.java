@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.example.jesusizquierdo.debatethis.Classes.Debate;
 import com.example.jesusizquierdo.debatethis.Classes.DebateInfo;
 import com.example.jesusizquierdo.debatethis.Classes.DiscussionCard;
+import com.example.jesusizquierdo.debatethis.FullDebate;
 import com.example.jesusizquierdo.debatethis.MainActivity;
 import com.example.jesusizquierdo.debatethis.R;
 import com.example.jesusizquierdo.debatethis.RecycleViewAdapters.FirebaseDebateCardViewHolder;
@@ -121,7 +123,7 @@ public class DebateFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
-        mRecyclerView.setLayoutManager(linearLayoutManager);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         mRecyclerView.setAdapter(mFirebaseAdapter);
 
 
