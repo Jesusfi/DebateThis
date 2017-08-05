@@ -89,7 +89,6 @@ public class DebateFragment extends Fragment {
         return viewRoot;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
 
     private void setUpFirebaseAdapter(String topic) {
         databaseReference = FirebaseDatabase.getInstance().getReference("DebateInfo").child(topic);

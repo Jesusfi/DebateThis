@@ -73,6 +73,7 @@ public class NewDebate extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent1 = new Intent(NewDebate.this, NewPoint.class);
                 intent1.putExtra("boolean",true);
+                intent1.putExtra("isPro",true);
                 startActivityForResult(intent1, REQUEST_CODE);
             }
         });
@@ -103,10 +104,19 @@ public class NewDebate extends AppCompatActivity {
                             .child(uniqueKey);
                     DebateInfo debateInfo = new DebateInfo(titleString, uniqueKey, topic);
                     Debate debate = new Debate(titleString, uniqueKey);
-                    debate.setPros(points);
-                    List<Points> cons = new ArrayList<Points>();
-                    cons.add(new Points("Nothing here yet", "Nothing here yet", "Nothing here yet"));
-                    debate.setCons(cons);
+//                    debate.setPros(points);
+//                    List<Points> cons = new ArrayList<Points>();
+//                    cons.add(new Points("Nothing here yet", "Nothing here yet", "Nothing here yet"));
+//                    debate.setCons(cons);
+
+                    for(int i = 0; i < points.size(); i++){
+
+                        DatabaseReference savePoints = FirebaseDatabase.getInstance().getReference()
+                                .child("DebatePoints")
+                                .child("Topic")
+                                .push();
+                        savePoints.setValue(points.get(i));
+                    }
                     firebaseDatabase.setValue(debate);
                     saveDebateInfo.setValue(debateInfo);
                     finish();
