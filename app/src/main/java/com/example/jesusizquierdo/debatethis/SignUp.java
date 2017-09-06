@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jesusizquierdo.debatethis.Classes.User;
@@ -65,11 +66,19 @@ public class SignUp extends AppCompatActivity {
         lastNameView = (AutoCompleteTextView) findViewById(R.id.et_lastname_signup);
         mPasswordView = (EditText) findViewById(R.id.et_password_signup);
         Button signUp = (Button) findViewById(R.id.btn_signup);
+        TextView alreadyMember = (TextView) findViewById(R.id.tv_already_member_signup);
 
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
+            }
+        });
+        alreadyMember.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SignUp.this, LoginActivity.class);
+                startActivity(intent);
             }
         });
 
