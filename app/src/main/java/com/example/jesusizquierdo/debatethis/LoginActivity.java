@@ -56,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         mPasswordView = (EditText) findViewById(R.id.password);
         progressDialog = new ProgressDialog(this);
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        TextView signUp = (TextView) findViewById(R.id.tv_signUp_login);
 
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -74,6 +75,13 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 checkEmailPassword();
+            }
+        });
+        signUp.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this,SignUp.class);
+                startActivity(intent);
             }
         });
 

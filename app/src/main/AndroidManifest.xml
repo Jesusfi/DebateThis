@@ -7,6 +7,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:name=".utils.AppController"
         android:allowBackup="true"
@@ -57,7 +62,10 @@
         <activity
             android:name=".NewPoint"
             android:label="@string/title_activity_new_point"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SignUp"
+            android:label="@string/title_activity_sign_up"></activity>
     </application>
 
 </manifest>

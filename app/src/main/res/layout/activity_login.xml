@@ -88,8 +88,8 @@
                     android:text="@string/new_click_here_to_sign_up"
                     android:textAlignment="center"
                     android:gravity="center"
+                    android:id="@+id/tv_signUp_login"
                     android:textSize="16sp"
-                    android:onClick="showSignUpFragment"
                     android:layout_marginTop="4dp" />
 
             </LinearLayout>

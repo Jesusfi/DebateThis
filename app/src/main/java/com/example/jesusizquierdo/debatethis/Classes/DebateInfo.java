@@ -3,7 +3,6 @@ package com.example.jesusizquierdo.debatethis.Classes;
 /**
  * Created by Jesus Izquierdo on 7/21/2017.
  */
-
 public class DebateInfo {
     String title;
     String uniqueID;
@@ -32,3 +31,4 @@ public class DebateInfo {
         return topic;
     }
 }
+

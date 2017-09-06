@@ -64,7 +64,8 @@ public class DebateFragment extends Fragment {
                 "Environment",
                 "Technology",
                 "Philosophy",
-                "Immigration");
+                "Immigration",
+                "Popular");
 
         setUpFirebaseAdapter("Politics");
         spinner.getSelectedIndex();
@@ -74,7 +75,13 @@ public class DebateFragment extends Fragment {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
                 Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
-                setUpFirebaseAdapter(item);
+                if(item.equals("Popular")){
+                    setUpFirebaseAdapterTop(item);
+                    Toast.makeText(getContext(),"Clicked Popular", Toast.LENGTH_SHORT).show();
+                }else{
+                    setUpFirebaseAdapter(item);
+
+                }
 
             }
         });
@@ -94,6 +101,42 @@ public class DebateFragment extends Fragment {
 
     private void setUpFirebaseAdapter(String topic) {
         databaseReference = FirebaseDatabase.getInstance().getReference("DebateInfo").child(topic);
+
+        FirebaseRecyclerAdapter mFirebaseAdapter = new FirebaseRecyclerAdapter<DebateInfo, FirebaseDebateViewHolder>
+                (DebateInfo.class, R.layout.debate_card_rv, FirebaseDebateViewHolder.class,
+                        databaseReference) {
+
+            @Override
+            protected void populateViewHolder(FirebaseDebateViewHolder viewHolder, DebateInfo model, int position) {
+                list.add(model);
+                viewHolder.bindDebate(model);
+            }
+
+
+        };
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+//                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        mRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        mRecyclerView.setAdapter(mFirebaseAdapter);
+
+
+    }
+    private void setUpFirebaseAdapterTop(String topic) {
+        databaseReference = FirebaseDatabase.getInstance().getReference("Popular");
 
         FirebaseRecyclerAdapter mFirebaseAdapter = new FirebaseRecyclerAdapter<DebateInfo, FirebaseDebateViewHolder>
                 (DebateInfo.class, R.layout.debate_card_rv, FirebaseDebateViewHolder.class,
