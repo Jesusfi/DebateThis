@@ -20,10 +20,25 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.jesusizquierdo.debatethis.Classes.Articles;
 import com.example.jesusizquierdo.debatethis.Classes.Comment;
 import com.example.jesusizquierdo.debatethis.Classes.DiscussionCard;
+import com.example.jesusizquierdo.debatethis.Classes.News;
 import com.example.jesusizquierdo.debatethis.DialogFragments.BioDialogFragment;
 import com.example.jesusizquierdo.debatethis.DialogFragments.CommentDialogFragment;
+import com.example.jesusizquierdo.debatethis.RecycleViewAdapters.ArticleRVAdapter;
 import com.example.jesusizquierdo.debatethis.RecycleViewAdapters.FirebaseCommentViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +46,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -51,6 +67,7 @@ public class FullDiscussion extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Discussion");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -83,7 +100,7 @@ public class FullDiscussion extends AppCompatActivity {
 
         category.setText(discussionCard.getCategory());
         articleTitle.setText(discussionCard.getArticleTitle());
-        cardTitle.setText(discussionCard.getTitle());
+//        cardTitle.setText(discussionCard.getTitle());
         username.setText("Discussion started by "+ discussionCard.getUserName());
 
         if (!TextUtils.isEmpty(discussionCard.getUserDescription())) {
@@ -238,6 +255,69 @@ public class FullDiscussion extends AppCompatActivity {
         finish();
         overridePendingTransition(0, 0);
         startActivity(intent);
+    }
+    public void getNews(String source) {
+        String url = "";
+        url = source;
+
+        RequestQueue queue = Volley.newRequestQueue(this.getApplicationContext());
+        final ProgressDialog pDialog = new ProgressDialog(this);
+        pDialog.setMessage("Loading...");
+        pDialog.show();
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                // Display the first 500 characters of the response string.
+                pDialog.dismiss();
+
+                Gson gson = new Gson();
+                News news = gson.fromJson(response, News.class);
+
+                ArrayList<Articles> articles = new ArrayList<>();
+
+                for (int i = 0; i < news.getArticles().size(); i++) {
+                    articles.add(news.getArticles().get(i));
+                }
+
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                pDialog.dismiss();
+                if (error instanceof TimeoutError) {
+                    Toast.makeText(FullDiscussion.this,
+                            "Timeout error",
+                            Toast.LENGTH_LONG).show();
+                }else if( error instanceof NoConnectionError) {
+
+                    Toast.makeText(FullDiscussion.this,
+                            "Connection error",
+                            Toast.LENGTH_LONG).show();
+                }else if (error instanceof AuthFailureError) {
+                    Toast.makeText(FullDiscussion.this,
+                            "Auth error",
+                            Toast.LENGTH_LONG).show();
+                } else if (error instanceof ServerError) {
+                    Toast.makeText(FullDiscussion.this,
+                            "Server error",
+                            Toast.LENGTH_LONG).show();
+                } else if (error instanceof NetworkError) {
+                    Toast.makeText(FullDiscussion.this,
+                            "Network error",
+                            Toast.LENGTH_LONG).show();
+                } else if (error instanceof ParseError) {
+                    Toast.makeText(FullDiscussion.this,
+                            "Parse error",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        queue.add(stringRequest);
     }
 
 }

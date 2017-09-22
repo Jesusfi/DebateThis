@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.jesusizquierdo.debatethis.Classes.ArticleInfoDiscussion;
 import com.example.jesusizquierdo.debatethis.Classes.Articles;
 import com.example.jesusizquierdo.debatethis.Classes.DiscussionCard;
 import com.example.jesusizquierdo.debatethis.Classes.DiscussionCardInfo;
@@ -90,27 +91,25 @@ public class NewDiscussionFragment extends Fragment {
 
                     }
 
-                    final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Discussion").child(date).push();
-                    final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Discussion Info");
+                   final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Discussion").child(date).push();
+                  //  final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Discussion Info");
 
                     String uniqueID = databaseReference.getKey();
 
                     String userName = ((MainActivity) getActivity()).getUserName();
 
-                    DiscussionCard newDebatCard = new DiscussionCard(
-                            title,
-                            category,
-                            articles.getAuthor(),
-                            userOpinion.getText().toString(),
+
+                    ArticleInfoDiscussion discussion= new ArticleInfoDiscussion(
                             articles.getUrl(),
+                            articles.getUrlToImage(),
+                            articles.getDescription(),
                             articles.getTitle(),
-                            userName,
-                            uniqueID);
+                            uniqueID
 
-                    databaseReference.setValue(newDebatCard);
+                    );
 
-                    DiscussionCardInfo cardInfo = new DiscussionCardInfo(articles.getUrl(), articles.getTitle(), uniqueID, date);
-                    reference.child(uniqueID).setValue(cardInfo);
+                    databaseReference.setValue(discussion);
+
 
                     getFragmentManager().popBackStack();
 
@@ -124,63 +123,7 @@ public class NewDiscussionFragment extends Fragment {
         return rootView;
     }
 
-    public void checkIfCreated() {
 
-        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Discussion Info");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Boolean isCreated = false;
-                for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
-                    DiscussionCardInfo cardInfo = messageSnapshot.getValue(DiscussionCardInfo.class);
-
-                    if (cardInfo.getUrl().equals(articles.getUrl())) {
-                        isCreated = true;
-                        break;
-                    }
-                }
-                if (isCreated) {
-                    Toast.makeText(getContext(), "Darn looks like someone beat you to it", Toast.LENGTH_SHORT).show();
-                } else {
-
-                    final String title = postTitle.getText().toString();
-                    final String category = pickCategory.getSelectedItem().toString();
-
-                    final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Discussion").push();
-                    final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Discussion Info");
-
-                    String uniqueID = databaseReference.getKey();
-
-                    String userName = ((MainActivity) getActivity()).getUserName();
-
-                    DiscussionCard newDebatCard = new DiscussionCard(title, category, articles.getAuthor(),
-                            userOpinion.getText().toString(),
-                            articles.getUrl(),
-                            articles.getTitle(),
-                            userName,
-                            uniqueID);
-
-                    databaseReference.setValue(newDebatCard);
-
-                    DiscussionCardInfo cardInfo = new DiscussionCardInfo(articles.getUrl(), articles.getTitle(), uniqueID, "this shouldn't matter");
-                    reference.child(uniqueID).setValue(cardInfo);
-
-                    getFragmentManager().popBackStack();
-
-                    Toast.makeText(getActivity(), "Post added successfully", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-
-
-        });
-
-
-    }
 
     public void setTime() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Time");
