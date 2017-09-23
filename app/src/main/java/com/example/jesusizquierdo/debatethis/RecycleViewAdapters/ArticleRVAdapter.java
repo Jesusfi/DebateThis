@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.jesusizquierdo.debatethis.Classes.ArticleInfoDiscussion;
 import com.example.jesusizquierdo.debatethis.Classes.Articles;
 import com.example.jesusizquierdo.debatethis.Classes.DiscussionCard;
 import com.example.jesusizquierdo.debatethis.Classes.DiscussionCardInfo;
@@ -122,7 +123,7 @@ public class ArticleRVAdapter extends RecyclerView.Adapter<ArticleRVAdapter.MyVi
                             databaseReference1.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    DiscussionCard discussionCard = dataSnapshot.getValue(DiscussionCard.class);
+                                    ArticleInfoDiscussion discussionCard = dataSnapshot.getValue(ArticleInfoDiscussion.class);
                                     ((MainActivity)context).startFullDiscussionFragment(discussionCard);
                                 }
 

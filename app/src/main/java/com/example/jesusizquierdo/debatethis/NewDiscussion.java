@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.jesusizquierdo.debatethis.Classes.ArticleInfoDiscussion;
 import com.example.jesusizquierdo.debatethis.Classes.Articles;
 import com.example.jesusizquierdo.debatethis.Classes.DiscussionCard;
 import com.example.jesusizquierdo.debatethis.Classes.DiscussionCardInfo;
@@ -100,20 +101,18 @@ public class NewDiscussion extends AppCompatActivity {
 
                     String userName = inten.getStringExtra("username");
 
-                    DiscussionCard newDebatCard = new DiscussionCard(
-                            title,
-                            category,
-                            articles.getAuthor(),
-                            userOpinion.getText().toString(),
+                    ArticleInfoDiscussion discussion= new ArticleInfoDiscussion(
                             articles.getUrl(),
+                            articles.getUrlToImage(),
+                            articles.getDescription(),
                             articles.getTitle(),
-                            userName,
-                            uniqueID);
+                            uniqueID
 
-                    databaseReference.setValue(newDebatCard);
+                    );
+                    databaseReference.setValue(discussion);
 
                     DiscussionCardInfo cardInfo = new DiscussionCardInfo(articles.getUrl(), articles.getTitle(), uniqueID, date);
-                    reference.child(uniqueID).setValue(cardInfo);
+
 
                     Toast.makeText(NewDiscussion.this, "Post added successfully", Toast.LENGTH_SHORT).show();
                     finish();

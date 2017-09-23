@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.jesusizquierdo.debatethis.Classes.ArticleInfoDiscussion;
 import com.example.jesusizquierdo.debatethis.Classes.Articles;
 import com.example.jesusizquierdo.debatethis.Classes.DiscussionCard;
 import com.example.jesusizquierdo.debatethis.MainActivity;
@@ -28,7 +29,7 @@ public class FirebaseDebateCardViewHolder extends RecyclerView.ViewHolder  {
         mContext = itemView.getContext();
     }
 
-    public void bindDebateCard(final DiscussionCard debateCard) {
+    public void bindDebateCard(final ArticleInfoDiscussion infoDiscussion) {
         TextView articleTitle = (TextView) itemView.findViewById(R.id.tv_article_title_discussionCard);
         TextView source = (TextView) itemView.findViewById(R.id.tv_source_discussionCard);
         TextView description = (TextView) itemView.findViewById(R.id.tv_description_discussionCard);
@@ -36,31 +37,22 @@ public class FirebaseDebateCardViewHolder extends RecyclerView.ViewHolder  {
         TextView category = (TextView) itemView.findViewById(R.id.tv_category_discussionCard);
         TextView userName = (TextView) itemView.findViewById(R.id.tv_name_of_card_creator_discussionCard);
 
-        articleTitle.setText(debateCard.getArticleTitle());
+        articleTitle.setText(infoDiscussion.articleTitle);
         //category.setText(debateCard.getCategory());
         //cardTitle.setText(debateCard.getTitle());
        // userName.setText("Discussion started by "+ debateCard.getUserName());
        // source.setText("Based of article from/by: " +debateCard.getSource());
 
-        if(TextUtils.isEmpty(debateCard.getUserDescription())){
-            description.setHeight(0);
 
-        }else{
-            description.setText( debateCard.getUserDescription());
-
-        }
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DiscussionCard discussionCard = debateCard;
-                ((MainActivity) mContext).startFullDiscussionFragment(discussionCard);
+                ArticleInfoDiscussion discussion = infoDiscussion;
+                ((MainActivity) mContext).startFullDiscussionFragment(discussion);
 
-                Toast.makeText(mContext,debateCard.getUniqueKey(),Toast.LENGTH_SHORT).show();
-            }
-        });
 
     }
 
 
-}
+});}}

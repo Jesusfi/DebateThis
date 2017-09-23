@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.jesusizquierdo.debatethis.Classes.ArticleInfoDiscussion;
 import com.example.jesusizquierdo.debatethis.Classes.Comment;
 import com.example.jesusizquierdo.debatethis.Classes.DiscussionCard;
 import com.example.jesusizquierdo.debatethis.Classes.Timetemp;
@@ -154,16 +155,16 @@ public class DiscussionFragment extends Fragment {
         databaseReference = FirebaseDatabase.getInstance().getReference("Discussion").child(date);
 
         DatabaseReference temp = FirebaseDatabase.getInstance().getReference("Discussions").child("wer");
-        FirebaseRecyclerAdapter mFirebaseAdapter = new FirebaseRecyclerAdapter<DiscussionCard, FirebaseDebateCardViewHolder>
-                (DiscussionCard.class, R.layout.discussion_card_rv, FirebaseDebateCardViewHolder.class,
+        FirebaseRecyclerAdapter mFirebaseAdapter = new FirebaseRecyclerAdapter<ArticleInfoDiscussion, FirebaseDebateCardViewHolder>
+                (ArticleInfoDiscussion.class, R.layout.discussion_card_rv, FirebaseDebateCardViewHolder.class,
                         databaseReference) {
 
             @Override
-            protected void populateViewHolder(FirebaseDebateCardViewHolder viewHolder,
-                                              DiscussionCard model, int position) {
-                list.add(model);
+            protected void populateViewHolder(FirebaseDebateCardViewHolder viewHolder, ArticleInfoDiscussion model, int position) {
                 viewHolder.bindDebateCard(model);
             }
+
+
         };
 
         databaseReference.addValueEventListener(new ValueEventListener() {

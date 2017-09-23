@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.jesusizquierdo.debatethis.Classes.ArticleInfoDiscussion;
 import com.example.jesusizquierdo.debatethis.Classes.Articles;
 import com.example.jesusizquierdo.debatethis.Classes.Comment;
 import com.example.jesusizquierdo.debatethis.Classes.DiscussionCard;
@@ -47,6 +49,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -84,11 +87,11 @@ public class FullDiscussion extends AppCompatActivity {
         newComment = (EditText) findViewById(R.id.et_new_comment_fullDescription);
         cardView = (CardView) findViewById(R.id.card_head_fullDescription);
 
-        TextView category = (TextView) findViewById(R.id.tv_category_fullDescription);
-        TextView articleTitle = (TextView) findViewById(R.id.tv_article_title_fullDescription);
-        TextView userDescription = (TextView) findViewById(R.id.tv_description_fullDescription);
-        TextView cardTitle = (TextView) findViewById(R.id.tv_card_title_fullDescription);
-        TextView username = (TextView) findViewById(R.id.tv_name_of_card_creator_fullDescription);
+
+        TextView articleTitle = (TextView) findViewById(R.id.tv_article_title_FullDiscussion);
+        TextView description = (TextView) findViewById(R.id.tv_article_description_FullDiscussion);
+        ImageView imageView = (ImageView) findViewById(R.id.imageView_article_FullDiscussion);
+
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading comments.....");
@@ -96,18 +99,24 @@ public class FullDiscussion extends AppCompatActivity {
 
         final Intent intent  = getIntent();
         Bundle bundle = this.getIntent().getExtras();
-        final DiscussionCard discussionCard = (DiscussionCard) bundle.getSerializable("discussionInfo");
+        final ArticleInfoDiscussion discussionCard = (ArticleInfoDiscussion) bundle.getSerializable("discussionInfo");
 
-        category.setText(discussionCard.getCategory());
+
         articleTitle.setText(discussionCard.getArticleTitle());
-//        cardTitle.setText(discussionCard.getTitle());
-        username.setText("Discussion started by "+ discussionCard.getUserName());
-
-        if (!TextUtils.isEmpty(discussionCard.getUserDescription())) {
-            userDescription.setText(discussionCard.getUserDescription());
-        }else{
-            userDescription.setVisibility(View.GONE);
+        description.setText(discussionCard.getArticleSummary());
+        try {
+            Picasso.with(this)
+                    .load(discussionCard.getImageURL())
+                    .resize(300, 300)
+                    .centerCrop()
+                    .noFade()
+                    .into(imageView);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+//
+
 
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Comments").child(discussionCard.getUniqueKey());
@@ -121,38 +130,10 @@ public class FullDiscussion extends AppCompatActivity {
                 CommentDialogFragment dialogFragment = new CommentDialogFragment();
 
                 dialogFragment.show(fm, "Bio");
-               /* if(newComment.getVisibility() == View.GONE){
-                    fabCancel.setVisibility(View.VISIBLE);
-                    newComment.setVisibility(View.VISIBLE);
-                    mRecyclerView.setVisibility(View.GONE);
-                    fab.setImageDrawable(ContextCompat.getDrawable(FullDiscussion.this, R.drawable.ic_check_black_48dp));
 
-                }else{
-                    if(TextUtils.isEmpty(newComment.getText().toString().trim())){
-                        Toast.makeText(FullDiscussion.this,"You must write something",Toast.LENGTH_SHORT).show();
+            /*    Intent intent = new Intent(FullDiscussion.this,NewDiscussion.class);
+                startActivity(intent);*/
 
-                    }else{
-                        Toast.makeText(FullDiscussion.this,"Saving Comment",Toast.LENGTH_SHORT).show();
-                        fabCancel.setVisibility(View.GONE);
-                        newComment.setVisibility(View.GONE);
-                        mRecyclerView.setVisibility(View.VISIBLE);
-                        fab.setImageDrawable(ContextCompat.getDrawable(FullDiscussion.this,R.drawable.ic_border_color_black_48dp));
-
-
-                        String userName = intent.getStringExtra("username");
-
-                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Comments").child(discussionCard.getUniqueKey()).push();
-                        Comment comment = new Comment(newComment.getText().toString().trim(),userName);
-                        reference.setValue(comment);
-                        Intent intent = getIntent();
-                        overridePendingTransition(0, 0);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        finish();
-                        overridePendingTransition(0, 0);
-                        startActivity(intent);
-                    }
-
-                }*/
             }
         });
         fabCancel.setOnClickListener(new View.OnClickListener() {
@@ -243,7 +224,7 @@ public class FullDiscussion extends AppCompatActivity {
 
         final Intent intent  = getIntent();
         Bundle bundle = this.getIntent().getExtras();
-        final DiscussionCard discussionCard = (DiscussionCard) bundle.getSerializable("discussionInfo");
+        final ArticleInfoDiscussion discussionCard = (ArticleInfoDiscussion) bundle.getSerializable("discussionInfo");
 
         String userName = intent.getStringExtra("username");
 
@@ -256,68 +237,6 @@ public class FullDiscussion extends AppCompatActivity {
         overridePendingTransition(0, 0);
         startActivity(intent);
     }
-    public void getNews(String source) {
-        String url = "";
-        url = source;
 
-        RequestQueue queue = Volley.newRequestQueue(this.getApplicationContext());
-        final ProgressDialog pDialog = new ProgressDialog(this);
-        pDialog.setMessage("Loading...");
-        pDialog.show();
-
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                // Display the first 500 characters of the response string.
-                pDialog.dismiss();
-
-                Gson gson = new Gson();
-                News news = gson.fromJson(response, News.class);
-
-                ArrayList<Articles> articles = new ArrayList<>();
-
-                for (int i = 0; i < news.getArticles().size(); i++) {
-                    articles.add(news.getArticles().get(i));
-                }
-
-
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                pDialog.dismiss();
-                if (error instanceof TimeoutError) {
-                    Toast.makeText(FullDiscussion.this,
-                            "Timeout error",
-                            Toast.LENGTH_LONG).show();
-                }else if( error instanceof NoConnectionError) {
-
-                    Toast.makeText(FullDiscussion.this,
-                            "Connection error",
-                            Toast.LENGTH_LONG).show();
-                }else if (error instanceof AuthFailureError) {
-                    Toast.makeText(FullDiscussion.this,
-                            "Auth error",
-                            Toast.LENGTH_LONG).show();
-                } else if (error instanceof ServerError) {
-                    Toast.makeText(FullDiscussion.this,
-                            "Server error",
-                            Toast.LENGTH_LONG).show();
-                } else if (error instanceof NetworkError) {
-                    Toast.makeText(FullDiscussion.this,
-                            "Network error",
-                            Toast.LENGTH_LONG).show();
-                } else if (error instanceof ParseError) {
-                    Toast.makeText(FullDiscussion.this,
-                            "Parse error",
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-        queue.add(stringRequest);
-    }
 
 }

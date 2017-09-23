@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.example.jesusizquierdo.debatethis.Classes.ArticleInfoDiscussion;
 import com.example.jesusizquierdo.debatethis.Classes.Articles;
 import com.example.jesusizquierdo.debatethis.Classes.DiscussionCard;
 import com.example.jesusizquierdo.debatethis.Classes.User;
@@ -151,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void startFullDiscussionFragment(DiscussionCard discussionCard) {
+    public void startFullDiscussionFragment(ArticleInfoDiscussion discussionCard) {
         /*FragmentManager fragmentManager = getSupportFragmentManager();
         Bundle bundle = new Bundle();
         bundle.putSerializable("DiscussionCard", discussionCard);

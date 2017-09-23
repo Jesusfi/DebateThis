@@ -4,11 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="4dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.jesusizquierdo.debatethis.FullDiscussion"
     tools:showIn="@layout/activity_full_discussion">
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="900dp"
         android:orientation="vertical">
@@ -21,126 +23,57 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_article_title_FullDiscussion"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginBottom="2dp"
-                    android:layout_weight="1"
-                    android:paddingLeft="4dp"
-                    android:paddingRight="4dp"
-                    android:text="What are your thoughts on this article?"
-                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="Title"
                     android:textColor="@android:color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
-
-                <TextView
-                    android:id="@+id/tv_description_fullDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:text="Description"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp"
-                    android:visibility="gone" />
-
-
-                <TextView
-                    android:id="@+id/tv_article_title_fullDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:ellipsize="end"
-                    android:textAlignment="center"
-                    android:maxLines="1"
-                    android:paddingRight="4dp"
-                    android:text="Trump deportes Marco Rubio"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:visibility="gone"
-                        android:id="@+id/tv_name_of_card_creator_fullDescription"
+                    <ImageView
+                        android:id="@+id/imageView_article_FullDiscussion"
+                        android:layout_width="0dp"
+                        android:layout_height="65dp"
+                        android:layout_weight=".25"
+                        android:paddingRight="4dp"
+                        app:srcCompat="@mipmap/ic_launcher" />
+
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:paddingLeft="4dp"
-                        android:text="Started by Jesus Izquierdo"
-                        android:textSize="12sp" />
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tv_category_fullDescription"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="4dp"
-                        android:text="Politics"
-                        android:visibility="gone"
-                        android:textSize="12sp" />
+                        <TextView
+                            android:id="@+id/tv_article_description_FullDiscussion"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1.2"
+                            android:ellipsize="end"
+                            android:maxLines="4"
+                            android:text="Description"
+                            android:textSize="16sp" />
+
+
+                    </LinearLayout>
+
+
                 </LinearLayout>
-
-                <Button
-                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="0dp"
-                    android:text="Hide"
-                    android:visibility="gone" />
-
                 <TextView
-                    android:id="@+id/tv_source_discussionCard"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="8dp"
-                    android:text="Based off BBC article"
-                    android:textSize="12sp"
-                    android:textStyle="italic"
-                    android:visibility="gone" />
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Like"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_weight="1"
-                        android:text="Unlike"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:typeface="normal" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="5" />
-
-
-                </LinearLayout>
+                    android:layout_height="0dp"
+                    android:layout_weight=".3"/>
 
             </LinearLayout>
         </android.support.v7.widget.CardView>
