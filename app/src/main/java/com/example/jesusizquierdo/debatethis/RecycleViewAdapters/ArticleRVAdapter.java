@@ -125,7 +125,7 @@ public class ArticleRVAdapter extends RecyclerView.Adapter<ArticleRVAdapter.MyVi
                                 //this must change
                             }
                         }
-
+// this is a comment
                         if (!articleAlreadyMade) {
                             ((MainActivity) context).startNewDiscussionActivity(articles1);
                         } else {
