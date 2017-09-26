@@ -104,7 +104,8 @@ public class NewDiscussionFragment extends Fragment {
                             articles.getUrlToImage(),
                             articles.getDescription(),
                             articles.getTitle(),
-                            uniqueID
+                            uniqueID,
+                            date
 
                     );
 

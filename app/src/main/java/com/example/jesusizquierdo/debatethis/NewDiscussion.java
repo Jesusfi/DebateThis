@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.jesusizquierdo.debatethis.Classes.ArticleInfoDiscussion;
 import com.example.jesusizquierdo.debatethis.Classes.Articles;
+import com.example.jesusizquierdo.debatethis.Classes.Comment;
 import com.example.jesusizquierdo.debatethis.Classes.DiscussionCard;
 import com.example.jesusizquierdo.debatethis.Classes.DiscussionCardInfo;
 import com.google.firebase.database.DataSnapshot;
@@ -79,12 +80,12 @@ public class NewDiscussion extends AppCompatActivity {
 
                 final String title = postTitle.getText().toString();
                 final String category = pickCategory.getSelectedItem().toString();
+                final String userOpinionString = userOpinion.getText().toString();
+
+                if (TextUtils.isEmpty(userOpinionString)) {
 
 
-                if (TextUtils.isEmpty(title)) {
-
-
-                    Toast.makeText(NewDiscussion.this, "Must add Title", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewDiscussion.this, "Must add Description", Toast.LENGTH_SHORT).show();
                 } else {
                     String date = "";
                     if (arrayList.size() > 0) {
@@ -106,12 +107,15 @@ public class NewDiscussion extends AppCompatActivity {
                             articles.getUrlToImage(),
                             articles.getDescription(),
                             articles.getTitle(),
-                            uniqueID
+                            uniqueID,
+                            date
 
                     );
                     databaseReference.setValue(discussion);
+                    Comment comment = new Comment(userOpinionString,userName);
+                    DatabaseReference referenceCom = FirebaseDatabase.getInstance().getReference("Comments").child(discussion.getUniqueKey()).push();
+                    referenceCom.setValue(comment);
 
-                    DiscussionCardInfo cardInfo = new DiscussionCardInfo(articles.getUrl(), articles.getTitle(), uniqueID, date);
 
 
                     Toast.makeText(NewDiscussion.this, "Post added successfully", Toast.LENGTH_SHORT).show();
@@ -120,8 +124,6 @@ public class NewDiscussion extends AppCompatActivity {
 
             }
         });
-
-
 
 
     }

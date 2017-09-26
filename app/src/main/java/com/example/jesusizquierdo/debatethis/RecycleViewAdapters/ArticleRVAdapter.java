@@ -25,7 +25,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by Jesus Izquierdo on 5/14/2017.
@@ -99,19 +104,25 @@ public class ArticleRVAdapter extends RecyclerView.Adapter<ArticleRVAdapter.MyVi
 
                 final Articles articles1 = articles.get(getAdapterPosition());
 
-                final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Discussion Info");
+                final Calendar calendar = Calendar.getInstance();
+                final DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                df.setTimeZone(TimeZone.getDefault());
+                final String date = df.format(calendar.getTime());
+                final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Discussion").child(date);
 
                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         boolean articleAlreadyMade = false;
                         DiscussionCardInfo cardInfo = null;
+                        ArticleInfoDiscussion discussion = null;
                         for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
-                             cardInfo = messageSnapshot.getValue(DiscussionCardInfo.class);
+                             discussion = messageSnapshot.getValue(ArticleInfoDiscussion.class);
 
-                            if (cardInfo.getUrl().equals(articles1.getUrl())) {
+                            if (discussion.getUrl().equals(articles1.getUrl())) {
                                 articleAlreadyMade = true;
                                 break;
+                                //this must change
                             }
                         }
 
@@ -119,7 +130,7 @@ public class ArticleRVAdapter extends RecyclerView.Adapter<ArticleRVAdapter.MyVi
                             ((MainActivity) context).startNewDiscussionActivity(articles1);
                         } else {
                             Toast.makeText(context, "ITEM EXISTS ALREADY", Toast.LENGTH_LONG).show();
-                            DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference().child("Discussion").child(cardInfo.getDate()).child(cardInfo.getKey());
+                            DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference().child("Discussion").child(discussion.getDate()).child(discussion.getUniqueKey());
                             databaseReference1.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {

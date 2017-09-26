@@ -49,6 +49,7 @@
 
 
                 <Spinner
+                    android:visibility="gone"
                     android:id="@+id/spinner_categorypicker_setTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -57,6 +58,7 @@
 
 
                 <EditText
+                    android:visibility="gone"
                     android:id="@+id/et_userTitle_newDiscussion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
