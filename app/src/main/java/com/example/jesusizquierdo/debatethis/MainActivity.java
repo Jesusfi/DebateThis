@@ -15,14 +15,10 @@ import android.view.MenuItem;
 
 import com.example.jesusizquierdo.debatethis.Classes.ArticleInfoDiscussion;
 import com.example.jesusizquierdo.debatethis.Classes.Articles;
-import com.example.jesusizquierdo.debatethis.Classes.DiscussionCard;
 import com.example.jesusizquierdo.debatethis.Classes.User;
-import com.example.jesusizquierdo.debatethis.Fragments.FullDescriptionFragment;
 import com.example.jesusizquierdo.debatethis.Fragments.HomePageFragment;
-import com.example.jesusizquierdo.debatethis.Fragments.NewDebateFragment;
 import com.example.jesusizquierdo.debatethis.Fragments.NewsFragment;
 import com.example.jesusizquierdo.debatethis.Fragments.ProfileFragment;
-import com.example.jesusizquierdo.debatethis.Fragments.WebViewFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -114,19 +110,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void startWebViewFragment(String url) {
 
-        FragmentManager manager = getSupportFragmentManager();
-        WebViewFragment webViewFragment = new WebViewFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("KEY", url);
-        webViewFragment.setArguments(bundle);
-        manager.beginTransaction()
-                .replace(R.id.content, webViewFragment)
-                .addToBackStack(null)
-                .commit();
-
-    }
 
     public void startNewDiscussionActivity(Articles articles) {
         /*FragmentManager fragmentManager = getSupportFragmentManager();
